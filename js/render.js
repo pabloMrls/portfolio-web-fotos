@@ -65,6 +65,53 @@ export function renderPanel(rerender) {
   });
 }
 
+// export function renderAlbums(fotos, onSelectCategoria, rerender) {
+//   const app = document.getElementById("app");
+//   app.innerHTML = "";
+
+//   const grid = document.createElement("section");
+//   grid.className = "albums-grid";
+
+//   const grupos = {};
+
+//   fotos.forEach((foto) => {
+//     if (!grupos[foto.categoria]) {
+//       grupos[foto.categoria] = [];
+//     }
+//     grupos[foto.categoria].push(foto);
+//   });
+
+//   Object.entries(grupos).forEach(([categoria, fotosCategoria]) => {
+//     const article = document.createElement("article");
+//     article.className = "album";
+//     article.tabIndex = 0;
+
+//     const figure = document.createElement("figure");
+
+//     const img = document.createElement("img");
+//     img.src = fotosCategoria[0].src;
+//     img.alt = `Álbum de ${categoria}`;
+
+//     const figcaption = document.createElement("figcaption");
+//     const title = document.createElement("h2");
+//     title.textContent = categoria;
+
+//     figcaption.appendChild(title);
+//     figure.appendChild(img);
+//     figure.appendChild(figcaption);
+//     article.appendChild(figure);
+
+//     article.addEventListener("click", () => {
+//       onSelectCategoria(categoria);
+//       rerender();
+//     });
+
+//     grid.appendChild(article);
+//   });
+
+//   app.appendChild(grid);
+// }
+
 export function renderAlbums(fotos, onSelectCategoria, rerender) {
   const app = document.getElementById("app");
   app.innerHTML = "";
@@ -74,7 +121,7 @@ export function renderAlbums(fotos, onSelectCategoria, rerender) {
 
   const grupos = {};
 
-  fotos.forEach((foto) => {
+  fotos.forEach(foto => {
     if (!grupos[foto.categoria]) {
       grupos[foto.categoria] = [];
     }
@@ -86,24 +133,28 @@ export function renderAlbums(fotos, onSelectCategoria, rerender) {
     article.className = "album";
     article.tabIndex = 0;
 
-    const figure = document.createElement("figure");
+    article.innerHTML = `
+      <img
+        src="${fotosCategoria[0].src}"
+        alt="Álbum ${categoria}"
+      />
 
-    const img = document.createElement("img");
-    img.src = fotosCategoria[0].src;
-    img.alt = `Álbum de ${categoria}`;
-
-    const figcaption = document.createElement("figcaption");
-    const title = document.createElement("h2");
-    title.textContent = categoria;
-
-    figcaption.appendChild(title);
-    figure.appendChild(img);
-    figure.appendChild(figcaption);
-    article.appendChild(figure);
+      <div class="album-overlay">
+        <h2>${categoria}</h2>
+        <span>${fotosCategoria.length} fotos</span>
+      </div>
+    `;
 
     article.addEventListener("click", () => {
       onSelectCategoria(categoria);
       rerender();
+    });
+
+    article.addEventListener("keydown", e => {
+      if (e.key === "Enter") {
+        onSelectCategoria(categoria);
+        rerender();
+      }
     });
 
     grid.appendChild(article);
@@ -111,6 +162,8 @@ export function renderAlbums(fotos, onSelectCategoria, rerender) {
 
   app.appendChild(grid);
 }
+
+
 
 export function renderFotosDeCategoria(fotos, categoria, rerender) {
   const app = document.getElementById("app");
