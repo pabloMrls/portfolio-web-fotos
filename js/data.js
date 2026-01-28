@@ -2,20 +2,20 @@ export const fotos = [
   // ===== BODAS =====
   {
     id: 1,
-    titulo: "Ceremonia",
+    titulo: "vista aéra",
     categoria: "paisaje",
     src: "/img/deportes/deporte.jpg",
     destacada: false
   },
   {
     id: 2,
-    titulo: "Anillos",
+    titulo: "Primer beso",
     categoria: "bodas",
     src: "/img/bodas/bodas.jpeg"
   },
   {
     id: 3,
-    titulo: "Primer beso",
+    titulo: "Felicidad",
     categoria: "bodas",
     src: "https://picsum.photos/id/1013/600/400",
     destacada: false
@@ -40,7 +40,7 @@ export const fotos = [
     id: 6,
     titulo: "Meta",
     categoria: "runner",
-    src: "https://picsum.photos/id/1023/600/400"
+    src: ""
   },
 
   // ===== DEPORTE =====
@@ -52,16 +52,17 @@ export const fotos = [
   },
   {
     id: 8,
-    titulo: "Libre",
+    titulo: "Fuerza",
     categoria: "deporte",
-    src: "/img/deportes/deporte (2).jpg"
+    src: "/img/deportes/deporte (2).jpg",
+    destacada: true
   },
   {
     id: 9,
     titulo: "Caminata",
     categoria: "deporte",
     src: "/img/deportes/deporte (5).jpg",
-    destacada: true
+    destacada: false
   },
   {
     id: 10,
