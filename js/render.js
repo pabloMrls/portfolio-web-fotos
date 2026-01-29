@@ -31,20 +31,31 @@ export function renderPanel(rerender) {
   const contador = document.getElementById("contador");
 
   contador.textContent = seleccionadas.length;
+  contador.dataset.vacio = seleccionadas.length === 0;
+
   lista.innerHTML = "";
 
   if (seleccionadas.length === 0) {
-    lista.innerHTML = "<p>No hay fotos seleccionadas</p>";
+    // lista.innerHTML = "<p>No hay fotos seleccionadas</p>";
+
+    lista.innerHTML = `
+    <div class="estado-vacio">
+      <span class="estado-icon">🖼️</span>
+      <p>Aún no seleccionaste fotos</p>
+      <small>Explorá los álbumes y elegí tus favoritas</small>
+    </div>
+  `;
 
     // 🔥 cerrar carrito automáticamente
     carrito.classList.remove("abierto");
 
     return;
   }
+  
 
   seleccionadas.forEach((id) => {
     const foto = fotos.find((f) => f.id === id);
-
+    
     const item = document.createElement("div");
     item.className = "item-seleccionada";
 
@@ -62,7 +73,9 @@ export function renderPanel(rerender) {
     });
 
     lista.appendChild(item);
+    
   });
+  lista.appendChild(header);
 }
 
 // export function renderAlbums(fotos, onSelectCategoria, rerender) {
@@ -116,6 +129,10 @@ export function renderAlbums(fotos, onSelectCategoria, rerender) {
   const app = document.getElementById("app");
   app.innerHTML = "";
 
+  const title = document.createElement("h2");
+  title.textContent ="Explora por categoría";
+  title.className = "section-title";
+
   const grid = document.createElement("section");
   grid.className = "albums-grid";
 
@@ -133,11 +150,15 @@ export function renderAlbums(fotos, onSelectCategoria, rerender) {
     article.className = "album";
     article.tabIndex = 0;
 
+    const previews = fotosCategoria
+      .slice(0, 3)
+      .map(f => `<img src="${f.src}" alt="">`)
+      .join("");
+
     article.innerHTML = `
-      <img
-        src="${fotosCategoria[0].src}"
-        alt="Álbum ${categoria}"
-      />
+      <div class="album-preview">
+        ${previews}
+      </div>
 
       <div class="album-overlay">
         <h2>${categoria}</h2>
@@ -158,9 +179,11 @@ export function renderAlbums(fotos, onSelectCategoria, rerender) {
     });
 
     grid.appendChild(article);
+    app.appendChild(title);
   });
 
   app.appendChild(grid);
+ 
 }
 
 
@@ -209,7 +232,7 @@ export function renderFotosDeCategoria(fotos, categoria, rerender) {
     card.innerHTML = `
       <img src="${foto.src}" alt="${foto.titulo}">
       <span class="tilde">✓</span>
-      <p>${foto.titulo}</p>
+      <p class="titulo-card">${foto.titulo}</p>
     `;
 
     // 👉 click = cambiar estado
@@ -257,8 +280,10 @@ export function renderSlider(fotos, rerender) {
   const fotoActual = fotos[sliderIndex];
   
   const title = document.createElement("h2");
-  title.className = "slider-title";
+  
   title.textContent = "Fotos destacadas";
+  title.className = "section-title section-title--secondary";
+
 
   frame.innerHTML = `
     <img src="${fotoActual.src}" alt="${fotoActual.titulo}">

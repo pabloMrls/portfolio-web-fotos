@@ -36,12 +36,12 @@ export const fotos = [
     src: "/img/runner/running (2).jpg",
     destacada: true
   },
-  {
-    id: 6,
-    titulo: "Meta",
-    categoria: "runner",
-    src: ""
-  },
+  // {
+  //   id: 6,
+  //   titulo: "Meta",
+  //   categoria: "runner",
+  //   src: ""
+  // },
 
   // ===== DEPORTE =====
   {
@@ -75,5 +75,7 @@ export const fotos = [
     titulo: "Destreza",
     categoria: "deporte",
     src: "/img/deportes/deporte (3).jpg"
-  }
+  },
+
+  
 ];
