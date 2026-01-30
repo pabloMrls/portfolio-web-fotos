@@ -42,7 +42,7 @@ export function renderPanel(rerender) {
     lista.innerHTML = `
     <div class="estado-vacio">
       <span class="estado-icon">🖼️</span>
-      <p>Aún no has seleccionaste fotos</p>
+      <p>Aún no has seleccionado fotos</p>
       <small>Explorá los álbumes y elige tus favoritas</small>
     </div>
   `;
