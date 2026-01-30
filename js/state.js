@@ -1,8 +1,7 @@
 // state.js 
-
-
 // Selección
 export let seleccionadas = [];
+export let ultimoEliminado = null;
 
 // navegación
 export let vista = "albums";        // "albums" | "fotos"
@@ -28,6 +27,24 @@ export function irAAlbums () {
 export function irAFotos (categoria) {
     vista = "fotos";
     categoriaActiva = categoria;
+}
+ 
+//Deshacer eleimiado
+
+export function quitarSeleccion(id) {
+  ultimoEliminado = id;
+  seleccionadas = seleccionadas.filter(x => x !== id);
+}
+
+export function deshacerEliminado () {
+  if(ultimoEliminado !== null) {
+    seleccionadas.push(ultimoEliminado);
+    ultimoEliminado = null;
+  }
+}
+
+export function confirmarEliminado () {
+  ultimoEliminado = null;
 }
 
 //no hay DOM

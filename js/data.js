@@ -2,7 +2,7 @@ export const fotos = [
   // ===== BODAS =====
   {
     id: 1,
-    titulo: "vista aerea",
+    titulo: "Vista aerea",
     categoria: "paisaje",
     src: "/img/deportes/deporte.jpg",
     destacada: false

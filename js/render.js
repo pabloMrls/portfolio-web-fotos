@@ -1,6 +1,6 @@
-import { seleccionadas, sliderIndex, nextSlide, prevSlide, toggleSeleccion, } from "./state.js";
+import { seleccionadas, sliderIndex, nextSlide, prevSlide, toggleSeleccion, quitarSeleccion, deshacerEliminado, confirmarEliminado } from "./state.js";
 import { fotos } from "./data.js";
-
+import { mostrarUndoToast } from "./main.js";
 
 
 export function renderFotos(onToggle) {
@@ -29,7 +29,9 @@ export function renderPanel(rerender) {
   const carrito = document.getElementById("carrito");
   const lista = document.getElementById("lista-seleccionadas");
   const contador = document.getElementById("contador");
+  const tit = document.getElementById("carrito-titulo");
 
+  tit.textContent = `Fotos seleccionadas (${seleccionadas.length})`;
   contador.textContent = seleccionadas.length;
   contador.dataset.vacio = seleccionadas.length === 0;
 
@@ -37,16 +39,15 @@ export function renderPanel(rerender) {
 
   if (seleccionadas.length === 0) {
     // lista.innerHTML = "<p>No hay fotos seleccionadas</p>";
-
     lista.innerHTML = `
     <div class="estado-vacio">
       <span class="estado-icon">🖼️</span>
-      <p>Aún no seleccionaste fotos</p>
-      <small>Explorá los álbumes y elegí tus favoritas</small>
+      <p>Aún no has seleccionaste fotos</p>
+      <small>Explorá los álbumes y elige tus favoritas</small>
     </div>
   `;
 
-    // 🔥 cerrar carrito automáticamente
+    //  cerrar carrito automáticamente
     carrito.classList.remove("abierto");
 
     return;
@@ -58,6 +59,7 @@ export function renderPanel(rerender) {
     
     const item = document.createElement("div");
     item.className = "item-seleccionada";
+    item.className = "carrito-item entrando";
 
     item.innerHTML = `
       <img src="${foto.src}" alt="${foto.titulo}">
@@ -66,17 +68,52 @@ export function renderPanel(rerender) {
       </div>
       <button>Quitar</button>
     `;
+ 
+  item.querySelector("button").addEventListener("click", () => {
+  item.classList.add("saliendo");
 
-    item.querySelector("button").addEventListener("click", () => {
-      toggleSeleccion(id);
-      rerender();
-    });
+  // item.addEventListener("transitionend", () => {
+  //   toggleSeleccion(id);
+  //   rerender();
+  //   mostrarToast("Foto eliminada de la selección");
+  // }, { once: true });
+  item.addEventListener("transitionend", () => {
+    quitarSeleccion(id);
+    rerender();
 
+    mostrarUndoToast(
+      () => {
+        deshacerEliminado();
+        rerender();
+      },
+      () => {
+        confirmarEliminado();
+      }
+    );
+  }, { once: true });
+});
+     
     lista.appendChild(item);
     
+    requestAnimationFrame(() => {
+   item.classList.remove("entrando");
+   });
+
   });
-  lista.appendChild(header);
+    
 }
+//Toast
+export function mostrarToast(mensaje) {
+  const toast = document.getElementById("toast");
+
+  toast.textContent = mensaje;
+  toast.classList.add("visible");
+
+  setTimeout(() => {
+    toast.classList.remove("visible");
+  }, 2000);
+}
+
 
 // export function renderAlbums(fotos, onSelectCategoria, rerender) {
 //   const app = document.getElementById("app");
@@ -192,17 +229,6 @@ export function renderFotosDeCategoria(fotos, categoria, rerender) {
   const app = document.getElementById("app");
   app.innerHTML = "";
 
-  //  botón volver
-  // const btnVolver = document.createElement("button");
-  // btnVolver.textContent = "← Volver a álbumes";
-
-  // btnVolver.addEventListener("click", () => {
-  //   onVolver();
-  //   rerender();
-  // });
-
-  // app.appendChild(btnVolver);
-
   //  título de categoría
   const titulo = document.createElement("h2");
   titulo.textContent = categoria.toUpperCase();
@@ -247,21 +273,6 @@ export function renderFotosDeCategoria(fotos, categoria, rerender) {
 
   app.appendChild(grid);
 }
-
-// export  function renderSlider(fotos, rerender) {
-//   const app = document.getElementById("app");
-
-//   const section = document.createElement("section");
-//   section.className = "slider-destacadas";
-
-//   const title = document.createElement("h2");
-//   title.textContent = "Imágenes destacadas";
-  
-//   section.appendChild(title);
-
-//   //acá va el slider (img + botones)
-//   app.appendChild(section);
-// }
 
 // renderSlider.js
 export function renderSlider(fotos, rerender) {
