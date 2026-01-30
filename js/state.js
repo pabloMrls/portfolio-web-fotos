@@ -36,14 +36,14 @@ export function quitarSeleccion(id) {
   seleccionadas = seleccionadas.filter(x => x !== id);
 }
 
-export function deshacerEliminado () {
-  if(ultimoEliminado !== null) {
+export function deshacerEliminado() {
+  if (ultimoEliminado !== null) {
     seleccionadas.push(ultimoEliminado);
     ultimoEliminado = null;
   }
 }
 
-export function confirmarEliminado () {
+export function confirmarEliminado() {
   ultimoEliminado = null;
 }
 

@@ -11,11 +11,8 @@ const carrito = document.getElementById("carrito");
 const btnCarrito = document.getElementById("btn-carrito");
 const btnCerrar = document.getElementById("cerrar-carrito");
 
-//Undo 
-let undoTimeout = null;
-
 function render() {
-
+ 
   renderBreadcrumb(render);
 
   if (vista === "albums") {
@@ -67,31 +64,11 @@ btnLimpiarCarrito.addEventListener("click", () => {
   const seguro = confirm("¿Vaciar el carrito?");
   if (!seguro) return;
   limpiarSeleccion();
+  
   render();
   
 });
 
-//Mostrar toast con undo
-export function mostrarUndoToast(onUndo, onConfirmar) {
-  const toast = document.getElementById("toast");
 
-   toast.innerHTML = `
-    <span>Foto eliminada</span>
-    <button id="btnUndo">Deshacer</button>
-  `;
-
-   toast.classList.add("visible");
-
-    document.getElementById("btnUndo").onclick = () => {
-    clearTimeout(undoTimeout);
-    toast.classList.remove("visible");
-    onUndo();
-  };
-
-  undoTimeout = setTimeout(() => {
-    toast.classList.remove("visible");
-    onConfirmar();
-  }, 4000);
-}
 
 render();

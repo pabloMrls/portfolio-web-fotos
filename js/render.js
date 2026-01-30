@@ -1,6 +1,6 @@
-import { seleccionadas, sliderIndex, nextSlide, prevSlide, toggleSeleccion, quitarSeleccion, deshacerEliminado, confirmarEliminado } from "./state.js";
+import { seleccionadas, sliderIndex, nextSlide, prevSlide, toggleSeleccion, quitarSeleccion, deshacerEliminado, confirmarEliminado} from "./state.js";
 import { fotos } from "./data.js";
-import { mostrarUndoToast } from "./main.js";
+import { mostrarUndoToast } from "./ui/toast.js";
 
 
 export function renderFotos(onToggle) {
@@ -52,14 +52,13 @@ export function renderPanel(rerender) {
 
     return;
   }
-  
 
   seleccionadas.forEach((id) => {
     const foto = fotos.find((f) => f.id === id);
     
     const item = document.createElement("div");
-    item.className = "item-seleccionada";
-    item.className = "carrito-item entrando";
+    // item.className = "item-seleccionada";
+    item.className = "carrito-item", "item-seleccionada", "entrando";
 
     item.innerHTML = `
       <img src="${foto.src}" alt="${foto.titulo}">
@@ -72,11 +71,6 @@ export function renderPanel(rerender) {
   item.querySelector("button").addEventListener("click", () => {
   item.classList.add("saliendo");
 
-  // item.addEventListener("transitionend", () => {
-  //   toggleSeleccion(id);
-  //   rerender();
-  //   mostrarToast("Foto eliminada de la selección");
-  // }, { once: true });
   item.addEventListener("transitionend", () => {
     quitarSeleccion(id);
     rerender();
@@ -113,54 +107,6 @@ export function mostrarToast(mensaje) {
     toast.classList.remove("visible");
   }, 2000);
 }
-
-
-// export function renderAlbums(fotos, onSelectCategoria, rerender) {
-//   const app = document.getElementById("app");
-//   app.innerHTML = "";
-
-//   const grid = document.createElement("section");
-//   grid.className = "albums-grid";
-
-//   const grupos = {};
-
-//   fotos.forEach((foto) => {
-//     if (!grupos[foto.categoria]) {
-//       grupos[foto.categoria] = [];
-//     }
-//     grupos[foto.categoria].push(foto);
-//   });
-
-//   Object.entries(grupos).forEach(([categoria, fotosCategoria]) => {
-//     const article = document.createElement("article");
-//     article.className = "album";
-//     article.tabIndex = 0;
-
-//     const figure = document.createElement("figure");
-
-//     const img = document.createElement("img");
-//     img.src = fotosCategoria[0].src;
-//     img.alt = `Álbum de ${categoria}`;
-
-//     const figcaption = document.createElement("figcaption");
-//     const title = document.createElement("h2");
-//     title.textContent = categoria;
-
-//     figcaption.appendChild(title);
-//     figure.appendChild(img);
-//     figure.appendChild(figcaption);
-//     article.appendChild(figure);
-
-//     article.addEventListener("click", () => {
-//       onSelectCategoria(categoria);
-//       rerender();
-//     });
-
-//     grid.appendChild(article);
-//   });
-
-//   app.appendChild(grid);
-// }
 
 export function renderAlbums(fotos, onSelectCategoria, rerender) {
   const app = document.getElementById("app");
@@ -223,8 +169,6 @@ export function renderAlbums(fotos, onSelectCategoria, rerender) {
  
 }
 
-
-
 export function renderFotosDeCategoria(fotos, categoria, rerender) {
   const app = document.getElementById("app");
   app.innerHTML = "";
@@ -261,7 +205,7 @@ export function renderFotosDeCategoria(fotos, categoria, rerender) {
       <p class="titulo-card">${foto.titulo}</p>
     `;
 
-    // 👉 click = cambiar estado
+    //  click = cambiar estado
     card.addEventListener("click", () => {
       toggleSeleccion(foto.id);
       rerender();
