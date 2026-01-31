@@ -5,11 +5,26 @@ import { vista, categoriaActiva, irAFotos, irAAlbums } from "./state.js";
 import { renderAlbums, renderFotosDeCategoria } from "./render.js";
 import { renderBreadcrumb } from "./breadcrumb.js";
 import { renderSlider } from "./render.js";
+import { mostrarConfirmacion } from "./ui/toast.js";
 
 const btnLimpiarCarrito = document.getElementById("btn-limpiar");
 const carrito = document.getElementById("carrito");
 const btnCarrito = document.getElementById("btn-carrito");
 const btnCerrar = document.getElementById("cerrar-carrito");
+
+//modal de reservas
+const btnReservar = document.querySelector(".btn-primario"); //Botón del carrito
+const modal = document.getElementById("modal-reserva");
+const cerrarModalBtn = document.getElementById("cerrar-modal");
+const cancelarBtn = document.getElementById("cancelar-reserva");
+const backdrop = modal.querySelector("modal-backdrop");
+const cantidadSpan = document.getElementById("reserva-cantidad");
+
+// Capturar el submit del formulario
+const formReserva = document.getElementById("form-reserva");
+const inputNombre = document.getElementById("reserva-nombre");
+const inputEmail = document.getElementById("reserva-email");
+const inputMensaje = document.getElementById("reserva-mensaje");
 
 function render() {
  
@@ -43,6 +58,66 @@ btnCarrito.addEventListener("click", () => {
 btnCerrar.addEventListener("click", () => {
   carrito.classList.remove("abierto");
 });
+
+//Abrir modal de reserva
+function abrirModalReserva() {
+  cantidadSpan.textContent = seleccionadas.length;
+  modal.classList.remove("hidden");
+}
+
+function cerrarModalReserva () {
+  modal.classList.add("hidden");
+  modal.setAttribute("aria-hidden", "true")
+}
+
+btnReservar.addEventListener("click", () => {
+  if (seleccionadas.length === 0) return;
+  abrirModalReserva();
+});
+
+// Tecla de escape para el formulario de reserva
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+    cerrarModalReserva();
+  }
+});
+
+// Escuchar el submmit
+formReserva-addEventListener("submit", e => {
+  e.preventDefault(); 
+
+  const nombre = inputNombre.value.trim();
+  const email = inputEmail.value.trim();
+  const mensaje = inputMensaje.value.trim();
+
+  // Validación
+  if (nombre === "" || email === "") {
+    mostrarError (" Por favor completa nombre e email");
+    return;
+  }
+  const reserva = {
+  nombre,
+  email,
+  mensaje,
+  fotos: [...seleccionadas],
+  fecha: new Date().toISOString()
+};
+console.log("Reserva creada:", reserva);
+
+mostrarConfirmacion("Gracias, te contactaremos a la brevedad");
+
+limpiarSeleccion();
+formReserva.reset();
+cerrarModalReserva();
+render();
+})
+
+function mostrarError(texto) {
+  alert(texto);
+}
+
+
+
 
 
 function animarContador() {

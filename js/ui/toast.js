@@ -21,3 +21,17 @@ export function mostrarUndoToast(onUndo, onConfirmar) {
     onConfirmar();
   }, 4000);
 }
+
+export function mostrarConfirmacion(texto = "Reserva enviada correctamente") {
+  const toast = document.getElementById("toast");
+
+  toast.innerHTML = `
+  <span>${texto}</span>
+  `;
+
+  toast.classList.add("visible");
+
+  setTimeout(() => {
+    toast.classList.remove("visible");
+  }, 3000);
+}

@@ -96,6 +96,54 @@
     </footer>
     
     <div id="toast" class="toast"></div>
+    <!-- Mdal de reserva-->
+    <!-- Modal de reserva -->
+<div id="modal-reserva" class="modal hidden" aria-hidden="true">
+  <div class="modal-backdrop"></div>
+
+  <div class="modal-content" role="dialog" aria-modal="true">
+    <header class="modal-header">
+      <h2>Reservar fotos seleccionadas</h2>
+      <button id="cerrar-modal" aria-label="Cerrar modal">✕</button>
+    </header>
+
+    <div class="modal-body">
+      <p class="modal-subtitle">
+        Completá tus datos y te contactaremos a la brevedad.
+      </p>
+
+      <p class="modal-resumen">
+        Fotos seleccionadas: <strong><span id="reserva-cantidad">0</span></strong>
+      </p>
+
+      <form id="form-reserva">
+        <label>
+          Nombre *
+          <input type="text" id="reserva-nombre" required />
+        </label>
+
+        <label>
+          Email *
+          <input type="email" id="reserva-email" required />
+        </label>
+
+        <label>
+          Mensaje (opcional)
+          <textarea id="reserva-mensaje" rows="4"></textarea>
+        </label>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secundario" id="cancelar-reserva">
+            Cancelar
+          </button>
+          <button type="submit" class="btn-primario">
+            Enviar reserva
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
   </body>
   <script type="module" src="js/main.js"></script>
