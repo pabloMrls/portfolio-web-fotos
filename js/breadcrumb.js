@@ -6,7 +6,6 @@ export function renderBreadcrumb (render) {
     const nav = document.getElementById("breadcrumb");
     breadcrumb.innerHTML = `Galeria`;
 
-
     if(vista === "albumbs") {
          nav.innerHTML = `
          <ol class="breadcrumb">
@@ -17,7 +16,7 @@ export function renderBreadcrumb (render) {
     }
 
     if(vista === "fotos") {
-         nav.innerHTML = `
+         nav.innerHTML = ` 
       <ol class="breadcrumb">
         <li>
           <a href="#" id="bc-albums">Álbumes</a>

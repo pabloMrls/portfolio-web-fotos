@@ -4,7 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/styles.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
     <title>Portfolio fotografia</title>
   </head>
   <body>
@@ -29,13 +38,15 @@
     <aside id="carrito" class="carrito cerrado">
       <header class="carrito-header">
         <h3 id="carrito-titulo"></h3>
-        <button id="cerrar-carrito">✕</button>
+        <button id="cerrar-carrito" class="btn-carrito">✕</button>
       </header>
 
       <div id="lista-seleccionadas" class="carrito-lista"></div>
 
       <footer class="carrito-footer">
-        <button id="btn-limpiar" class="btn-secundario">Limpiar <span class="material-symbols-outlined">delete_forever</span></button>
+        <button id="btn-limpiar" class="btn-secundario">
+          Limpiar <span class="material-symbols-outlined">delete_forever</span>
+        </button>
         <button class="btn-primario">Reservar</button>
       </footer>
     </aside>
@@ -51,10 +62,8 @@
     <section class="hero">
       <div class="hero-text">
         <h1 class="hero-title">Capturando momentos reales</h1>
-        <p class="hero-subtitle">
-          Fotografía deportiva, retratos y paisajes
-        </p>
-         <a href="#galeria" class="hero-cta">Ver galería</a>
+        <p class="hero-subtitle">Fotografía deportiva, retratos y paisajes</p>
+        <a href="#galeria" class="hero-cta">Ver galería</a>
       </div>
     </section>
 
@@ -104,57 +113,61 @@
         <p>© 2026 · Todos los derechos reservados</p>
       </div>
     </footer>
-    
+
     <div id="toast" class="toast"></div>
     <!-- Mdal de reserva-->
-    
-<div id="modal-reserva" class="modal hidden" aria-hidden="true">
-  <div class="modal-backdrop"></div>
 
-  <div class="modal-content" role="dialog" aria-modal="true">
-    <header class="modal-header">
-      <h2>Reservar fotos seleccionadas</h2>
-      <button id="cerrar-modal" aria-label="Cerrar modal"><span class="material-symbols-outlined">close</span></button>
-    </header>
+    <div id="modal-reserva" class="modal hidden" aria-hidden="true">
+      <div class="modal-backdrop"></div>
 
-    <div class="modal-body">
-      <p class="modal-subtitle">
-        Completá tus datos y te contactaremos a la brevedad.
-      </p>
-
-      <p class="modal-resumen">
-        Fotos seleccionadas: <strong><span id="reserva-cantidad">0</span></strong>
-      </p>
-
-      <form id="form-reserva">
-        <label>
-          Nombre *
-          <input type="text" id="reserva-nombre" required />
-        </label>
-
-        <label>
-          Email *
-          <input type="email" id="reserva-email" required />
-        </label>
-
-        <label>
-          Mensaje (opcional)
-          <textarea id="reserva-mensaje" rows="4"></textarea>
-        </label>
-
-        <div class="modal-actions">
-          <button type="button" class="btn-secundario" id="cancelar-reserva">
-            Cancelar 
+      <div class="modal-content" role="dialog" aria-modal="true">
+        <header class="modal-header">
+          <h2>Reservar fotos seleccionadas</h2>
+          <button id="cerrar-modal" aria-label="Cerrar modal">
+            <span class="material-symbols-outlined">close</span>
           </button>
-          <button type="submit" class="btn-primario">
-            Enviar reserva
-          </button>
+        </header>
+
+        <div class="modal-body">
+          <p class="modal-subtitle">
+            Completá tus datos y te contactaremos a la brevedad.
+          </p>
+
+          <p class="modal-resumen">
+            Fotos seleccionadas:
+            <strong><span id="reserva-cantidad">0</span></strong>
+          </p>
+
+          <form id="form-reserva">
+            <label>
+              Nombre *
+              <input type="text" id="reserva-nombre" required />
+            </label>
+
+            <label>
+              Email *
+              <input type="email" id="reserva-email" required />
+            </label>
+
+            <label>
+              Mensaje (opcional)
+              <textarea id="reserva-mensaje" rows="4"></textarea>
+            </label>
+
+            <div class="modal-actions">
+              <button
+                type="button"
+                class="btn-secundario"
+                id="cancelar-reserva"
+              >
+                Cancelar
+              </button>
+              <button type="submit" class="btn-primario">Enviar reserva</button>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
-  </div>
-</div>
-
   </body>
   <script type="module" src="js/main.js"></script>
 </html>
