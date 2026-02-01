@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <title>Portfolio fotografia</title>
   </head>
   <body>
@@ -34,7 +35,7 @@
       <div id="lista-seleccionadas" class="carrito-lista"></div>
 
       <footer class="carrito-footer">
-        <button id="btn-limpiar" class="btn-secundario">Limpiar</button>
+        <button id="btn-limpiar" class="btn-secundario">Limpiar <span class="material-symbols-outlined">delete_forever</span></button>
         <button class="btn-primario">Reservar</button>
       </footer>
     </aside>
@@ -113,7 +114,7 @@
   <div class="modal-content" role="dialog" aria-modal="true">
     <header class="modal-header">
       <h2>Reservar fotos seleccionadas</h2>
-      <button id="cerrar-modal" aria-label="Cerrar modal">✕</button>
+      <button id="cerrar-modal" aria-label="Cerrar modal"><span class="material-symbols-outlined">close</span></button>
     </header>
 
     <div class="modal-body">
@@ -143,7 +144,7 @@
 
         <div class="modal-actions">
           <button type="button" class="btn-secundario" id="cancelar-reserva">
-            Cancelar
+            Cancelar 
           </button>
           <button type="submit" class="btn-primario">
             Enviar reserva

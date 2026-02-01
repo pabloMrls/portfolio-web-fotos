@@ -41,7 +41,7 @@ export function renderPanel(rerender) {
     // lista.innerHTML = "<p>No hay fotos seleccionadas</p>";
     lista.innerHTML = `
     <div class="estado-vacio">
-      <span class="estado-icon">🖼️</span>
+      <span class="estado-icon"><span class="material-symbols-outlined">image</span></span>
       <p>Aún no has seleccionado fotos</p>
       <small>Explora los álbumes y elige tus favoritas</small>
     </div>
@@ -65,7 +65,7 @@ export function renderPanel(rerender) {
       <div>
         <strong>${foto.titulo}</strong>
       </div>
-      <button>Quitar</button>
+      <button>Quitar<span class="material-symbols-outlined">delete</span></button>
     `;
  
   item.querySelector("button").addEventListener("click", () => {

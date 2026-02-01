@@ -12,6 +12,13 @@
   --space-lg: 24px;
 }
 
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
 
 body {
   background: var(--color-bg);
@@ -65,9 +72,9 @@ body {
 .hero {
   padding: clamp(4rem,  10vh, 8rem) 1.5rem;
   background: #1f1919;
-  background: linear-gradient(rgba(0, 0, 0, 0.575),
+  background: linear-gradient(rgba(0, 0, 0, 0.57),
       rgba(0, 0, 0, 0.5)),
-    url("/img/runner/running.jpg") center/cover;
+    url("/img/deportes/deporteHero.jpg") center/cover;
   color: white;
 }
 .hero-title {
@@ -519,6 +526,9 @@ estilos de hero
   border: none;
   color: #c00;
   cursor: pointer;
+  border: 1px solid #c00;
+  display: flex;
+  align-items: center;
 }
 
 .carrito-footer {
@@ -1497,6 +1507,7 @@ button:disabled {
 
 button {
   transition: background 0.2s ease, transform 0.15s ease;
+  
 }
 
 button:hover {
@@ -1517,6 +1528,13 @@ button:disabled {
   outline-offset: 2px;
 }
 
+.btn-secundario {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
 /* Desktop grande */
 @media (min-width: 1200px) {
