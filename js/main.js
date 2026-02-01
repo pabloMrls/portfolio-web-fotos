@@ -17,8 +17,16 @@ const btnReservar = document.querySelector(".btn-primario"); //Botón del carrit
 const modal = document.getElementById("modal-reserva");
 const cerrarModalBtn = document.getElementById("cerrar-modal");
 const cancelarBtn = document.getElementById("cancelar-reserva");
-const backdrop = modal.querySelector("modal-backdrop");
+const backdrop = modal.querySelector(".modal-backdrop");
 const cantidadSpan = document.getElementById("reserva-cantidad");
+
+
+
+/*
+* TODO: Cerrar el modal
+* Dar funcionalidad al botón cancelar
+* Backdrop 
+*/
 
 // Capturar el submit del formulario
 const formReserva = document.getElementById("form-reserva");
@@ -63,12 +71,18 @@ btnCerrar.addEventListener("click", () => {
 function abrirModalReserva() {
   cantidadSpan.textContent = seleccionadas.length;
   modal.classList.remove("hidden");
-}
 
+}
+//cerrar modal de reserva
 function cerrarModalReserva () {
   modal.classList.add("hidden");
-  modal.setAttribute("aria-hidden", "true")
+  modal.setAttribute("aria-hidden", "true");
+
 }
+
+cerrarModalBtn.addEventListener("click", cerrarModalReserva);
+cancelarBtn.addEventListener("click", cerrarModalReserva)
+backdrop.addEventListener("click", cerrarModalReserva)
 
 btnReservar.addEventListener("click", () => {
   if (seleccionadas.length === 0) return;
@@ -108,16 +122,13 @@ mostrarConfirmacion("Gracias, te contactaremos a la brevedad");
 
 limpiarSeleccion();
 formReserva.reset();
-cerrarModalReserva();
+cerrarModalReserva(); 
 render();
 })
 
 function mostrarError(texto) {
   alert(texto);
 }
-
-
-
 
 
 function animarContador() {

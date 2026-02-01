@@ -155,7 +155,7 @@ estilos de hero
 }
 
 #app {
-  padding: 32px;
+  padding: 16px;
   min-height: 100vh;
   background: var(--bg);
   color: var(--text);
@@ -1362,6 +1362,7 @@ button:disabled {
   padding: 16px 20px;
   border-bottom: 1px solid #eeee;
   display: flex;
+  color: #696868;
   justify-content: space-between;
   align-items: center;
 }
@@ -1369,6 +1370,7 @@ button:disabled {
 .modal-header h2 {
   margin: 0;
   font-size: 1.1rem;
+   color: #696868;
 }
 
 .modal-header button {
@@ -1387,11 +1389,13 @@ button:disabled {
   margin: 0 0 12px;
   font-size: 0.9rem;
   color: #6b6969;
+  
 }
 
 .modal-resumen {
   margin-bottom: 20px;
   font-size: 0.95rem;
+  color: #41a746;
 }
 
 /* Form */
@@ -1406,6 +1410,7 @@ button:disabled {
   flex-direction: column;
   font-size: 0.85rem;
   gap: 6px;
+  color: #9e9797;
 }
 
 #form-reserva input,
