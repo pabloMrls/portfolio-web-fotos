@@ -30,7 +30,8 @@ body {
 }
 
 .header-principal {
-  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
 }
 
 .foto {
@@ -71,12 +72,14 @@ body {
 } */
 .hero {
   padding: clamp(4rem,  10vh, 8rem) 1.5rem;
+  min-height: 30vh;
   background: #1f1919;
   background: linear-gradient(rgba(0, 0, 0, 0.57),
       rgba(0, 0, 0, 0.5)),
     url("/img/deportes/deporteHero.jpg") center/cover;
   color: white;
 }
+
 .hero-title {
   font-size: clamp(2.2rem, 5vw, 3.2rem);
   font-weight: 500;
