@@ -7,6 +7,7 @@ import { renderBreadcrumb } from "./breadcrumb.js";
 import { renderSlider } from "./render.js";
 import { mostrarConfirmacion } from "./ui/toast.js";
 
+
 const btnLimpiarCarrito = document.getElementById("btn-limpiar");
 const carrito = document.getElementById("carrito");
 const btnCarrito = document.getElementById("btn-carrito");
@@ -35,7 +36,10 @@ const inputEmail = document.getElementById("reserva-email");
 const inputMensaje = document.getElementById("reserva-mensaje");
 
 function render() {
- renderBreadcrumb(["Galería", categoriaActiva]);
+ renderBreadcrumb([
+  { label: "Galería", onClick: volverAGaleria },
+  { label: categoriaActiva }
+]);
 
   if (vista === "albums") {
     renderAlbums(fotos, irAFotos, render);
@@ -56,6 +60,12 @@ function render() {
   renderPanel(render);
   btnLimpiarCarrito.disabled = seleccionadas.length === 0;
 }
+
+function volverAGaleria () {
+  irAAlbums() //cambia el estado
+  render();
+}
+
 
 //Abrir y cerrar el carrito 
 btnCarrito.addEventListener("click", () => {

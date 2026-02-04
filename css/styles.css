@@ -241,9 +241,8 @@ estilos de hero
 
 /*Breadcrumb*/
 #breadcrumb {
-  padding: 16px 32px;
-  background: var(--color-surface2);
-  /* border-bottom: 1px solid var(--color-primary); */
+  padding: 8px 24px;
+  background: transparent;
 }
 
 #breadcrumb:empty {
@@ -805,6 +804,9 @@ estilos de hero
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
   gap: 40px;
+}
+#breadcrumb + #app .section-title:first-child {
+  margin-top: 24px;
 }
 
 /*footer brand*/

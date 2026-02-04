@@ -1,10 +1,11 @@
 import { seleccionadas, sliderIndex, nextSlide, prevSlide, toggleSeleccion, quitarSeleccion, deshacerEliminado, confirmarEliminado} from "./state.js";
 import { fotos } from "./data.js";
 import { mostrarUndoToast } from "./ui/toast.js";
-
+import { renderBreadcrumb } from "./breadcrumb.js";
 
 export function renderFotos(onToggle) {
   const app = document.getElementById("app");
+  
   app.innerHTML = "";
 
   fotos.forEach((foto) => {
@@ -109,6 +110,8 @@ export function mostrarToast(mensaje) {
 }
 
 export function renderAlbums(fotos, onSelectCategoria, rerender) {
+  renderBreadcrumb([]);
+
   const app = document.getElementById("app");
   app.innerHTML = "";
 

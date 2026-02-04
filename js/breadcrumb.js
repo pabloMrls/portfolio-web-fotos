@@ -11,11 +11,29 @@ export function renderBreadcrumb(items = []) {
   const ul = document.createElement("ul");
   ul.className = "breadcrumb";
 
-  items.forEach(item => {
-    const li = document.createElement("li");
-    li.textContent = item;
-    ul.appendChild(li);
-  });
+  items.forEach((item, index) => {
+  const li = document.createElement("li");
+
+  // Si el item tiene acción y NO es el último
+  if (item.onClick && index < items.length - 1) {
+    const a = document.createElement("a");
+    a.href = "#";
+    a.textContent = item.label;
+
+    a.addEventListener("click", e => {
+      e.preventDefault();
+      item.onClick();
+    });
+
+    li.appendChild(a);
+  } else {
+    // Último item (activo) o sin acción
+    li.textContent = item.label || item;
+  }
+
+  ul.appendChild(li);
+});
+
 
   breadcrumb.appendChild(ul);
 }
