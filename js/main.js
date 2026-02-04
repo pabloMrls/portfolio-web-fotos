@@ -22,13 +22,6 @@ const backdrop = modal.querySelector(".modal-backdrop");
 const cantidadSpan = document.getElementById("reserva-cantidad");
 
 
-
-/*
-* TODO: Cerrar el modal
-* Dar funcionalidad al botón cancelar
-* Backdrop 
-*/
-
 // Capturar el submit del formulario
 const formReserva = document.getElementById("form-reserva");
 const inputNombre = document.getElementById("reserva-nombre");
