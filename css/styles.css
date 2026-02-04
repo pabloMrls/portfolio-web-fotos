@@ -246,6 +246,11 @@ estilos de hero
   /* border-bottom: 1px solid var(--color-primary); */
 }
 
+#breadcrumb:empty {
+  display: none;
+}
+
+
 .breadcrumb {
   display: flex;
   gap: 8px;
