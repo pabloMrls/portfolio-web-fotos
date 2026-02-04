@@ -2,36 +2,20 @@
 
 import { vista, categoriaActiva, irAAlbums } from "./state.js";
 
-export function renderBreadcrumb (render) {
-    const nav = document.getElementById("breadcrumb");
-    breadcrumb.innerHTML = `Galeria`;
+export function renderBreadcrumb(items = []) {
+  const breadcrumb = document.getElementById("breadcrumb");
+  breadcrumb.innerHTML = "";
 
-    if(vista === "albumbs") {
-         nav.innerHTML = `
-         <ol class="breadcrumb">
-          <li aria-current="page">Álbumes</li>
-        </ol>
-    `;
-    return;
-    }
+  if (items.length === 0) return;
 
-    if(vista === "fotos") {
-         nav.innerHTML = ` 
-      <ol class="breadcrumb">
-        <li>
-          <a href="#" id="bc-albums">Álbumes</a>
-        </li>
-        <li aria-current="page">${categoriaActiva}</li>
-      </ol>
-    `;
+  const ul = document.createElement("ul");
+  ul.className = "breadcrumb";
 
-    document
-      .getElementById("bc-albums")
-      .addEventListener("click", e => {
-        e.preventDefault();
-        irAAlbums();
-        render();
-      });
-        
-    }
+  items.forEach(item => {
+    const li = document.createElement("li");
+    li.textContent = item;
+    ul.appendChild(li);
+  });
+
+  breadcrumb.appendChild(ul);
 }

@@ -35,8 +35,7 @@ const inputEmail = document.getElementById("reserva-email");
 const inputMensaje = document.getElementById("reserva-mensaje");
 
 function render() {
- 
-  renderBreadcrumb(render);
+ renderBreadcrumb(["Galería", categoriaActiva]);
 
   if (vista === "albums") {
     renderAlbums(fotos, irAFotos, render);
