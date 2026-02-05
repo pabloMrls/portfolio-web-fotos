@@ -2,25 +2,27 @@ import express from "express";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
+
+//rutas
 import reservasRouter from "./routes/reservas.js";
+import fotosRouter from "./routes/fotos.js"
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
+
 // resolver paths correctamente
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// 👉 SERVIR IMÁGENES (esto es lo importante)
-app.use(
-  "/img",
-  express.static(path.resolve(__dirname, "../img"))
-);
+app.use(express.static("public"));
+
 
 // API
 app.use("/api/reservas", reservasRouter);
+app.use("/api/fotos", fotosRouter);
 
 // arrancar servidor
 app.listen(3000, () => {

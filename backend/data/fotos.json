@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "titulo": "Vista aérea",
+    "categoria": "Paisaje",
+    "src": "/img/deportes/deporte.jpg",
+    "destacada": false
+  },
+  {
+    "id": 2,
+    "titulo": "Primer beso",
+    "categoria": "Bodas",
+    "src": "/img/bodas/bodas.jpeg",
+    "destacada": true
+  },
+  {
+    "id": 1770318655380,
+    "titulo": "Fuerza",
+    "categoria": "Deporte",
+    "src": "/img/1770318655361-deporte (2).jpg",
+    "destacada": true
+  },
+  {
+    "id": 1770318954871,
+    "titulo": "Largada",
+    "categoria": "Runner",
+    "src": "/img/1770318954749-running.jpg",
+    "destacada": false
+  }
+]

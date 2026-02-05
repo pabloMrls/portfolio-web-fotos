@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin · Fotos</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+  <h1>Admin - fotos</h1>
+<form id="form-foto" class="admin-form" enctype="multipart/form-data">
+  <input type="text" name="titulo" placeholder="Título" required />
+
+  <select name="categoria" required>
+    <option value="">Categoría</option>
+    <option value="Bodas">Bodas</option>
+    <option value="Runner">Runner</option>
+    <option value="Paisaje">Paisaje</option>
+    <option value="Deporte">Deporte</option>
+  </select>
+
+  <input type="file" name="imagen" accept="image/*" required />
+
+  <label>
+    <input type="checkbox" name="destacada" />
+    Destacada
+  </label>
+
+  <button type="submit">Agregar foto</button>
+</form>
+
+  <main class="admin">
+    <h1>Admin · Fotos</h1>
+    <section id="fotos-grid" class="admin-grid"></section>
+  </main>
+
+  <script type="module" src="/js/admin.js"></script>
+</body>
+</html>
