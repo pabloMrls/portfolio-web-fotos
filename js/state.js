@@ -7,6 +7,14 @@ export let ultimoEliminado = null;
 export let vista = "albums";        // "albums" | "fotos"
 export let categoriaActiva = null;  // "bodas" | "runner" | "deporte"
 
+// reservas
+export const reservas = [];
+export let filtroActual = "todas";
+
+export function agregarReserva(reserva){
+  reservas.push(reserva);
+}
+
 export function toggleSeleccion(id) {
   if (seleccionadas.includes(id)) {
     seleccionadas = seleccionadas.filter(x => x !== id);

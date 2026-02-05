@@ -1,0 +1,24 @@
+[
+  {
+    "id": "rsv_1770258648400",
+    "nombre": "angela",
+    "email": "pmerles9@gmail.com",
+    "mensaje": "sd",
+    "fotos": [
+      "/img/bodas/bodas.jpeg"
+    ],
+    "estado": "pendiente",
+    "fecha": "2026-02-05T02:30:48.400Z"
+  },
+  {
+    "id": "rsv_1770258827377",
+    "nombre": "angela",
+    "email": "her@gmail.com",
+    "mensaje": "sdsad",
+    "fotos": [
+      "/img/bodas/bodas.jpeg"
+    ],
+    "estado": "pendiente",
+    "fecha": "2026-02-05T02:33:47.377Z"
+  }
+]

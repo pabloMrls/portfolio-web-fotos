@@ -1,11 +1,12 @@
 import { fotos } from "./data.js";
 import { limpiarSeleccion, seleccionadas} from "./state.js";
 import { renderPanel } from "./render.js";
-import { vista, categoriaActiva, irAFotos, irAAlbums } from "./state.js";
+import { vista, categoriaActiva, irAFotos, irAAlbums, agregarReserva} from "./state.js";
 import { renderAlbums, renderFotosDeCategoria } from "./render.js";
 import { renderBreadcrumb } from "./breadcrumb.js";
 import { renderSlider } from "./render.js";
 import { mostrarConfirmacion } from "./ui/toast.js";
+import { enviarReserva } from "./api.js";
 
 
 const btnLimpiarCarrito = document.getElementById("btn-limpiar");
@@ -99,34 +100,48 @@ document.addEventListener("keydown", e => {
 });
 
 // Escuchar el submmit
-formReserva-addEventListener("submit", e => {
+formReserva.addEventListener("submit", async e => {
   e.preventDefault(); 
 
   const nombre = inputNombre.value.trim();
   const email = inputEmail.value.trim();
   const mensaje = inputMensaje.value.trim();
 
-  // Validación
   if (nombre === "" || email === "") {
-    mostrarError (" Por favor completa nombre e email");
+    mostrarError("Por favor completa nombre e email");
     return;
   }
+
   const reserva = {
-  nombre,
-  email,
-  mensaje,
-  fotos: [...seleccionadas],
-  fecha: new Date().toISOString()
-};
-console.log("Reserva creada:", reserva);
+    nombre,
+    email,
+    mensaje,
+     fotos: ["/img/bodas/bodas.jpeg"],
+    // fotos: seleccionadas.map(id => `/img/fotos/${id}.jpg`),
+    fecha: new Date().toISOString()
+  };
 
-mostrarConfirmacion("Gracias, te contactaremos a la brevedad");
+  try {
+    console.log("📤 Enviando reserva:", reserva);
 
-limpiarSeleccion();
-formReserva.reset();
-cerrarModalReserva(); 
-render();
-})
+    const result = await enviarReserva(reserva);
+
+    console.log("✅ Guardada en backend:", result);
+
+    mostrarConfirmacion("Gracias, te contactaremos a la brevedad");
+    // UX (esto sí está bien hacerlo acá)
+    formReserva.reset();
+    limpiarSeleccion();
+    formReserva.reset();
+    cerrarModalReserva();
+    render();
+
+  } catch (err) {
+    
+    mostrarError("No se pudo enviar la reserva");
+  }
+});
+
 
 function mostrarError(texto) {
   alert(texto);
