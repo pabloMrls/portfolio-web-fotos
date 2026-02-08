@@ -1,18 +1,31 @@
 let vista = "activas";
 
-const contenedor = document.getElementById("reservas");
-
+// ===============================
+// API
+// ===============================
 async function cargarReservas() {
-  const url =
-    vista === "activas" ? "/api/reservas" : "/api/reservas/eliminadas";
-
-  const res = await fetch(url);
-  if (!res.ok) throw new Error("Error cargando reservas");
+  const res = await fetch("/api/reservas");
+  if (!res.ok) return [];
   return await res.json();
 }
 
+async function cambiarEstado(id, estado) {
+  await fetch(`/api/reservas/${id}/estado`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ estado }),
+  });
+
+  iniciarAdmin();
+}
+
+// ===============================
+// Render
+// ===============================
 function renderReservas(reservas) {
+  const contenedor = document.getElementById("reservas");
   contenedor.innerHTML = "";
+  
 
   if (reservas.length === 0) {
     contenedor.textContent =
@@ -23,186 +36,141 @@ function renderReservas(reservas) {
   }
 
   reservas.forEach((r) => {
-    const div = document.createElement("article");
-    div.className = "reserva";
+    const article = document.createElement("article");
+    article.className = "reserva";
 
-    div.innerHTML = `
+    article.innerHTML = `
   <header class="reserva-header">
-    <div>
-      <strong class="reserva-nombre">
-        ${r.nombre}
-        ${esReciente(r.fecha) ? `<span class="badge-nueva">Nueva</span>` : ""}
-    </strong>
-
-     <span class="reserva-fecha">
-       ${formatearTiempo(r.fecha)}
-    </span>
-
-    </div>
-    <span class="reserva-email">${r.email}</span>
+    <strong>${r.nombre}</strong>
+    ${
+      esNueva(r.fecha)
+        ? `<span class="badge-nueva">Nuevo</span>`
+        : ""
+    }
   </header>
 
-  <p class="reserva-mensaje">
-    ${r.mensaje || "Sin mensaje"}
-  </p>
+  <small class="reserva-tiempo">
+    ${tiempoRelativo(r.fecha)}
+  </small>
 
-  <div class="fotos">
-    ${r.fotos.map((src) => `<img src="${src}" alt="">`).join("")}
-  </div>
+  <p>${r.mensaje || "Sin mensaje"}</p>
 
-  <footer class="reserva-actions">
-    <a
-  href="${generarGmailLink(r)}"
-  class="btn-responder"
-  target="_blank"
-  rel="noopener noreferrer"
->
-  Responder
-</a>
+  ${
+    r.estado === "eliminado"
+      ? `<button data-id="${r.id}" data-accion="restaurar" class="btn-restaurar">Restaurar</button>`
+      : `<button data-id="${r.id}" data-accion="eliminar" class="btn-eliminar">Eliminar</button>
+       <br>
+        <small class="hint">Se puede restaurar más tarde</small>
+      `
+      
+  }
 
-
-    ${vista === "activas"
-        ? `<button class="btn-eliminar">Eliminar</button>`
-        : `<button class="btn-restaurar">Restaurar</button>`
-      }
-  </footer>
 `;
 
 
-    // acciones según tab
-    if (vista === "activas") {
-      div.querySelector(".btn-eliminar").onclick = () => eliminarReserva(r.id);
-    } else {
-      div.querySelector(".btn-restaurar").onclick = () =>
-        restaurarReserva(r.id);
-    }
-
-    contenedor.appendChild(div);
+    contenedor.appendChild(article);
   });
 }
 
-async function eliminarReserva(id) {
-  if (!confirm("¿Eliminar esta reserva?")) return;
-
-  await fetch(`/api/reservas/${id}`, { method: "DELETE" });
-  await actualizarContadores();
-  refrescar();
+// ===============================
+// Estado de vista
+// ===============================
+function filtrarPorVista(reservas) {
+  return vista === "activas"
+    ? reservas.filter((r) => r.estado !== "eliminado")
+    : reservas.filter((r) => r.estado === "eliminado");
 }
 
-async function restaurarReserva(id) {
-  if (!confirm("¿Restaurar esta reserva?")) return;
+function actualizarContadores(reservas) {
+  const activas = reservas.filter((r) => r.estado !== "eliminado").length;
+  const eliminadas = reservas.filter((r) => r.estado === "eliminado").length;
 
-  await fetch(`/api/reservas/${id}/restaurar`, {
-    method: "PATCH",
-  });
-  await actualizarContadores();
-  refrescar();
+  document.getElementById("count-activas").textContent = activas;
+  document.getElementById("count-eliminadas").textContent = eliminadas;
 }
 
-async function refrescar() {
-  const reservas = await cargarReservas();
-  renderReservas(reservas);
+function setTabActiva() {
+  document.querySelectorAll(".tab").forEach((btn) =>
+    btn.classList.remove("active")
+  );
+
+  document
+    .getElementById(vista === "activas" ? "tab-activas" : "tab-eliminadas")
+    .classList.add("active");
 }
+
+// ===============================
+// Eventos
+// ===============================
+document.addEventListener("click", (e) => {
+  if (e.target.tagName !== "BUTTON") return;
+
+  const id = e.target.dataset.id;
+  const accion = e.target.dataset.accion;
+
+  if (accion === "eliminar") {
+    const confirmar = confirm(
+      "¿Mover esta reserva a Eliminadas?\n\n" +
+      "No se borrará definitivamente.\n" +
+      "Podrás restaurarla más tarde."
+    );
+
+    if (!confirmar) return;
+
+    cambiarEstado(id, "eliminado");
+  }
+
+  if (accion === "restaurar") {
+    const confirmar = confirm(
+      "¿Restaurar esta reserva a Activas?"
+    );
+
+    if (!confirmar) return;
+
+    cambiarEstado(id, "pendiente");
+  }
+});
+
 
 document.getElementById("tab-activas").onclick = () => {
   vista = "activas";
   setTabActiva();
-  refrescar();
+  iniciarAdmin();
 };
 
 document.getElementById("tab-eliminadas").onclick = () => {
   vista = "eliminadas";
   setTabActiva();
-  refrescar();
+  iniciarAdmin();
 };
-
-function setTabActiva() {
-  document
-    .querySelectorAll(".tab")
-    .forEach((btn) => btn.classList.remove("active"));
-
-  document.getElementById(`tab-${vista}`).classList.add("active");
-}
-
-function esReciente(fechaIso) {
+//Helper de tiempo 
+function tiempoRelativo(fechaISO){
   const ahora = Date.now();
-  const fecha = new Date(fechaIso).getTime();
-
-  const horas24 = 24 * 60 * 60 * 1000;
-  return ahora - fecha < horas24;
-}
-
-async function actualizarContadores() {
-  const [activas, eliminadas] = await Promise.all([
-    fetch("/api/reservas").then((r) => r.json()),
-    fetch("/api/reservas/eliminadas").then((r) => r.json()),
-  ]);
-
-  document.getElementById("count-activas").textContent = activas.length;
-  document.getElementById("count-eliminadas").textContent = eliminadas.length;
-}
-//Helpers
-function formatearTiempo(fechaISO) {
-  const fecha = new Date(fechaISO);
-  const ahora = new Date();
+  const fecha = new Date(fechaISO).getTime();
 
   const diffMs = ahora - fecha;
   const diffMin = Math.floor(diffMs / 60000);
   const diffHoras = Math.floor(diffMin / 60);
 
-  // Menos de 1 minuto
-  if (diffMin < 1) {
-    return "Hace un momento";
-  }
+  if (diffMin < 1) return "Hace un momento";
+  if (diffMin < 60) return `Hace ${diffMin} min`;
+  if (diffHoras < 24) return `Hace ${diffHoras} h`;
 
-  // Menos de 1 hora
-  if (diffMin < 60) {
-    return `Hace ${diffMin} minuto${diffMin === 1 ? "" : "s"}`;
-  }
-
-  // Hoy
-  if (diffHoras < 24 && ahora.getDate() === fecha.getDate()) {
-    return `Hoy · ${fecha.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    })}`;
-  }
-
-  // Ayer
-  const ayer = new Date();
-  ayer.setDate(ahora.getDate() - 1);
-  if (fecha.toDateString() === ayer.toDateString()) {
-    return `Ayer · ${fecha.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    })}`;
-  }
-
-  // Más viejo
-  return fecha.toLocaleDateString();
+  return new Date(fechaISO).toLocaleDateString();
 }
 
-function generarGmailLink(reserva) {
-  const to = encodeURIComponent(reserva.email);
-  const subject = encodeURIComponent("Sobre tu consulta de fotografías");
-  const body = encodeURIComponent(
-`Hola ${reserva.nombre},
-
-Gracias por tu mensaje. Te escribo por las fotos que seleccionaste.
-
-Quedo atento/a a tu respuesta.
-Saludos.`
-  );
-
-  return `https://mail.google.com/mail/?view=cm&fs=1&to=${to}&su=${subject}&body=${body}`;
+function esNueva(fechaISO) {
+  const ahora = Date.now();
+  const fecha = new Date(fechaISO).getTime();
+  return ahora - fecha < 24 * 60 * 60 * 1000;
+}
+// ===============================
+// Init
+// ===============================
+async function iniciarAdmin() {
+  const reservas = await cargarReservas();
+  actualizarContadores(reservas);
+  renderReservas(filtrarPorVista(reservas));
 }
 
-
-
-async function init() {
-  setTabActiva();
-  await actualizarContadores();
-  refrescar();
-}
-
-init();
+iniciarAdmin();

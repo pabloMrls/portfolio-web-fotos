@@ -1,0 +1,10 @@
+
+POST http://localhost:3000/api/reservas
+Content-Type: application/json
+
+{
+  "nombre": "Ana",
+  "email": "ana@test.com",
+  "mensaje": "Segunda reserva para probar cambio de estado",
+  "fotos": ["/img/retratos/retrato1.jpg"]
+}
