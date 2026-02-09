@@ -1,7 +1,15 @@
 
-import { limpiarSeleccion, seleccionadas} from "./state.js";
+import {
+  limpiarSeleccion,
+  seleccionadas,
+  vista,
+  categoriaActiva,
+  irAFotos,
+  irAAlbums
+} from "./state.js";
+
+
 import { renderPanel } from "./render.js";
-import { vista, categoriaActiva, irAFotos, irAAlbums} from "./state.js";
 import { renderAlbums, renderFotosDeCategoria } from "./render.js";
 import { renderBreadcrumb } from "./breadcrumb.js";
 import { renderSlider } from "./render.js";

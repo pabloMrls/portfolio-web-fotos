@@ -37,7 +37,8 @@ router.post("/", async (req, res) => {
   }
   const db  = await dbPromise;
   
-  const fecha = new Date().toDateString()
+  const fecha = new Date().toISOString(); 
+
 
   const result = await db.run(
      `

@@ -53,7 +53,33 @@ function renderReservas(reservas) {
     ${tiempoRelativo(r.fecha)}
   </small>
 
-  <p>${r.mensaje || "Sin mensaje"}</p>
+  <p class="reserva-mensaje">
+  ${r.mensaje || "Sin mensaje"}
+  </p>
+
+${
+  r.fotos && r.fotos.length > 0
+    ? `
+      <div class="reserva-fotos">
+        <span class="reserva-fotos-count">
+          ${r.fotos.length} foto${r.fotos.length > 1 ? "s" : ""}
+        </span>
+
+        ${r.fotos
+          .map(
+            (src) => `
+              <img
+                src="${src}"
+                alt="Foto seleccionada"
+                class="reserva-miniatura"
+              />
+            `
+          )
+          .join("")}
+      </div>
+    `
+    : ""
+}
 
   ${
     r.estado === "eliminado"
@@ -143,6 +169,13 @@ document.getElementById("tab-eliminadas").onclick = () => {
   setTabActiva();
   iniciarAdmin();
 };
+
+document.addEventListener("click", (e) => {
+  if (!e.target.classList.contains("reserva-miniatura")) return;
+
+  window.open(e.target.src, "_blank");
+});
+
 //Helper de tiempo 
 function tiempoRelativo(fechaISO){
   const ahora = Date.now();
