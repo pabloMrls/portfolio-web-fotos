@@ -1,0 +1,41 @@
+[
+  {
+    "id": 1,
+    "titulo": "Vista aerea",
+    "categoria": "Paisaje",
+    "src": "/img/paisaje/paisaje.jpg",
+    "destacada": false
+  },
+  {
+    "id": 2,
+    "titulo": "Primer beso",
+    "categoria": "Bodas",
+    "src": "/img/bodas/boda-3.jpeg"
+  },
+  {
+    "id": 3,
+    "titulo": "Felicidad",
+    "categoria": "Bodas",
+    "src": "/img/bodas/boda-2.jpeg"
+  },
+  {
+    "id": 4,
+    "titulo": "Salida",
+    "categoria": "Runner",
+    "src": "/img/runner/running.jpg",
+    "destacada": true
+  },
+  {
+    "id": 5,
+    "titulo": "Ritmo",
+    "categoria": "Runner",
+    "src": "/img/runner/running-2.jpg",
+    "destacada": true
+  },
+  {
+    "id": 7,
+    "titulo": "Tenis",
+    "categoria": "Deporte",
+    "src": "/img/deportes/deporte-5.jpg"
+  }
+]
