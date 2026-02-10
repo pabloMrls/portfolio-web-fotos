@@ -10,9 +10,11 @@ export function renderBreadcrumb(items = []) {
 
   const ul = document.createElement("ul");
   ul.className = "breadcrumb";
+  console.log("BREADCRUMB ITEMS:", items);
 
   items.forEach((item, index) => {
   const li = document.createElement("li");
+    console.log("ITEM:", item, "index:", index, "len:", items.length);
 
   // Si el item tiene acción y NO es el último
   if (item.onClick && index < items.length - 1) {

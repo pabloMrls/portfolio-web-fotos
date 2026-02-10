@@ -1584,6 +1584,31 @@ button:disabled {
   font-family: var(--font-body);
 }
 
+.img-skeleton {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: linear-gradient(
+    90deg,
+    #eee 25%,
+    #f5f5f5 37%,
+    #eee 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 8px;
+}
+
+.skeleton-text {
+  height: 12px;
+  margin-top: 8px;
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
 /* Desktop grande */
 @media (min-width: 1200px) {
   .fotos-grid {

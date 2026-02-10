@@ -1,7 +1,7 @@
 // state.js 
 // Selección
 export let seleccionadas = [];
-export let ultimoEliminado = null;
+export let ultimaEliminada = null;
 
 // navegación
 export let vista = "albums";        // "albums" | "fotos"
@@ -40,19 +40,21 @@ export function irAFotos (categoria) {
 //Deshacer eleimiado
 
 export function quitarSeleccion(id) {
-  ultimoEliminado = id;
-  seleccionadas = seleccionadas.filter(x => x !== id);
+  const index = seleccionadas.indexOf(id);
+  if (index !== -1) {
+    ultimaEliminada = id;
+    seleccionadas.splice(index, 1);
+  }
 }
-
 export function deshacerEliminado() {
-  if (ultimoEliminado !== null) {
-    seleccionadas.push(ultimoEliminado);
-    ultimoEliminado = null;
+  if (ultimaEliminada !== null) {
+    seleccionadas.push(ultimaEliminada);
+    ultimaEliminada = null;
   }
 }
 
 export function confirmarEliminado() {
-  ultimoEliminado = null;
+  ultimaEliminada = null;
 }
 
 //no hay DOM

@@ -1,4 +1,5 @@
-import { seleccionadas, sliderIndex, nextSlide, prevSlide, toggleSeleccion, quitarSeleccion, deshacerEliminado, confirmarEliminado} from "./state.js";
+import { seleccionadas, sliderIndex, nextSlide, prevSlide, 
+  quitarSeleccion, deshacerEliminado, confirmarEliminado} from "./state.js";
 
 import { mostrarUndoToast } from "./ui/toast.js";
 import { renderBreadcrumb } from "./breadcrumb.js";
@@ -25,7 +26,7 @@ export function renderFotos(onToggle) {
   });
 }
 
-export function renderPanel(rerender) {
+export function renderPanel() {
   const carrito = document.getElementById("carrito");
   const lista = document.getElementById("lista-seleccionadas");
   const contador = document.getElementById("contador");
@@ -54,6 +55,7 @@ export function renderPanel(rerender) {
   }
 
   seleccionadas.forEach((id) => {
+    //eso me muestra en consola con una cruz
     const foto = fotos.find((f) => f.id === id);
     
     const item = document.createElement("div");
@@ -78,7 +80,7 @@ export function renderPanel(rerender) {
     mostrarUndoToast(
       () => {
         deshacerEliminado();
-        rerender();
+       
       },
       () => {
         confirmarEliminado();
@@ -108,7 +110,7 @@ export function mostrarToast(mensaje) {
   }, 2000);
 }
 
-export function renderAlbums(fotos, onSelectCategoria, rerender) {
+export function renderAlbums(fotos, onSelectCategoria) {
   renderBreadcrumb([]);
 
   const app = document.getElementById("app");
@@ -153,13 +155,13 @@ export function renderAlbums(fotos, onSelectCategoria, rerender) {
 
     article.addEventListener("click", () => {
       onSelectCategoria(categoria);
-      rerender();
+      
     });
 
     article.addEventListener("keydown", e => {
       if (e.key === "Enter") {
         onSelectCategoria(categoria);
-        rerender();
+        
       }
     });
 
@@ -171,7 +173,11 @@ export function renderAlbums(fotos, onSelectCategoria, rerender) {
  
 }
 
-export function renderFotosDeCategoria(fotos, categoria, rerender) {
+export function renderFotosDeCategoria(
+  fotos, 
+  categoria,
+  onToggle
+) {
   const app = document.getElementById("app");
   app.innerHTML = "";
 
@@ -206,11 +212,10 @@ export function renderFotosDeCategoria(fotos, categoria, rerender) {
       <span class="tilde">✓</span>
       <p class="titulo-card">${foto.titulo}</p>
     `;
-
+ 
     //  click = cambiar estado
     card.addEventListener("click", () => {
-      toggleSeleccion(foto.id);
-      rerender();
+      onToggle(foto.id);
     });
     // card.appendChild(img);
     // card.appendChild(titulo);
@@ -218,10 +223,11 @@ export function renderFotosDeCategoria(fotos, categoria, rerender) {
   });
 
   app.appendChild(grid);
+  
 }
 
 // renderSlider.js
-export function renderSlider(fotos, rerender) {
+export function renderSlider(fotos) {
   const app = document.getElementById("app");
 
   // Si no hay fotos destacadas, no renderiza nada
@@ -257,13 +263,13 @@ export function renderSlider(fotos, rerender) {
   frame.querySelector(".prev").addEventListener("click", e => {
     e.stopPropagation();
     prevSlide(fotos.length);
-    rerender();
+    
   });
 
   frame.querySelector(".next").addEventListener("click", e => {
     e.stopPropagation();
     nextSlide(fotos.length);
-    rerender();
+    
   });
   section.appendChild(title);
   section.appendChild(frame);

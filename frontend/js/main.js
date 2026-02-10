@@ -1,4 +1,4 @@
-
+import { renderBreadcrumb } from "./breadcrumb.js";
 import { cargarFotos } from "./api.js";
 import {
   seleccionadas,
@@ -8,14 +8,18 @@ import {
   vista,
   categoriaActiva,
   irAFotos,
-  irAAlbums
+  irAAlbums,
+  confirmarEliminado,
+  deshacerEliminado,
+  
 } from "./state.js";
 
 import {
+  mostrarToast,
   renderAlbums,
-  renderFotosDeCategoria
+  renderFotosDeCategoria,
 } from "./render.js";
-
+import { mostrarUndoToast } from "./ui/toast.js";
 
 
 // import { renderPanel } from "./render.js";
@@ -89,43 +93,43 @@ const inputMensaje = document.getElementById("reserva-mensaje");
 // }
 
 
-// //Abrir y cerrar el carrito 
-// btnCarrito.addEventListener("click", () => {
-//   carrito.classList.add("abierto");
-// });
+//Abrir y cerrar el carrito 
+btnCarrito.addEventListener("click", () => {
+  carrito.classList.add("abierto");
+});
 
-// btnCerrar.addEventListener("click", () => {
-//   carrito.classList.remove("abierto");
-// });
+btnCerrar.addEventListener("click", () => {
+  carrito.classList.remove("abierto");
+});
 
-// //Abrir modal de reserva
-// function abrirModalReserva() {
-//   cantidadSpan.textContent = seleccionadas.length;
-//   modal.classList.remove("hidden");
+//Abrir modal de reserva
+function abrirModalReserva() {
+  cantidadSpan.textContent = seleccionadas.length;
+  modal.classList.remove("hidden");
 
-// }
-// //cerrar modal de reserva
-// function cerrarModalReserva () {
-//   modal.classList.add("hidden");
-//   modal.setAttribute("aria-hidden", "true");
+}
+//cerrar modal de reserva
+function cerrarModalReserva () {
+  modal.classList.add("hidden");
+  modal.setAttribute("aria-hidden", "true");
 
-// }
+}
 
-// cerrarModalBtn.addEventListener("click", cerrarModalReserva);
-// cancelarBtn.addEventListener("click", cerrarModalReserva)
-// backdrop.addEventListener("click", cerrarModalReserva)
+cerrarModalBtn.addEventListener("click", cerrarModalReserva);
+cancelarBtn.addEventListener("click", cerrarModalReserva)
+backdrop.addEventListener("click", cerrarModalReserva)
 
-// btnReservar.addEventListener("click", () => {
-//   if (seleccionadas.length === 0) return;
-//   abrirModalReserva();
-// });
+btnReservar.addEventListener("click", () => {
+  if (seleccionadas.length === 0) return;
+  abrirModalReserva();
+});
 
-// // Tecla de escape para el formulario de reserva
-// document.addEventListener("keydown", e => {
-//   if (e.key === "Escape" && !modal.classList.contains("hidden")) {
-//     cerrarModalReserva();
-//   }
-// });
+// Tecla de escape para el formulario de reserva
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+    cerrarModalReserva();
+  }
+});
 
 // // Escuchar el submmit
 // formReserva.addEventListener("submit", async e => {
@@ -187,17 +191,17 @@ const inputMensaje = document.getElementById("reserva-mensaje");
 
 // animarContador();
 
-// //Limpiar carrito
-// btnLimpiarCarrito.addEventListener("click", () => {
-//   if (seleccionadas.length === 0) return;
+//Limpiar carrito
+btnLimpiarCarrito.addEventListener("click", () => {
+  if (seleccionadas.length === 0) return;
 
-//   const seguro = confirm("¿Vaciar el carrito?");
-//   if (!seguro) return;
-//   limpiarSeleccion();
+  const seguro = confirm("¿Vaciar el carrito?");
+  if (!seguro) return;
+  limpiarSeleccion();
   
-//   render();
+  render();
   
-// });
+});
 
 
 // async function init() {
@@ -212,34 +216,70 @@ const inputMensaje = document.getElementById("reserva-mensaje");
 
 
 let fotos = [];
+console.log("vista:", vista, "categoria:", categoriaActiva);
 
 function render() {
   console.log("RENDER vista:", vista, "categoria:", categoriaActiva);
+  
+  // Breadcrumb según estado 
+  const breadcrumbItems = [];
 
   if (vista === "albums") {
-    renderAlbums(fotos, irAFotos, render);
+    breadcrumbItems.push({label: "Galería"});
+  }
+
+  if(vista === "fotos") {
+    breadcrumbItems.push(
+      {
+        label: "Galería",
+        onClick: () => {
+          irAAlbums();
+          render();
+        }
+      }, 
+      {label: categoriaActiva}
+    )
+  }
+  
+  renderBreadcrumb(breadcrumbItems);
+
+  // Vista principal
+  if (vista === "albums") {
+    // 
+    renderAlbums(fotos, (categoria) => {
+  irAFotos(categoria);
+  render();
+});
+
   }
 
   if (vista === "fotos") {
     renderFotosDeCategoria(
-      fotos,
-      categoriaActiva,
-      render
-    );
+  fotos,
+  categoriaActiva,
+  (id) => {
+    toggleSeleccion(id);
+    render();
   }
+);
 
+  }
+ 
   renderCarrito();
+  
 }
 
 
 const app = document.getElementById("app");
-const lista = document.getElementById("lista-seleccionadas");
-const contador = document.getElementById("contador");
+// const lista = document.getElementById("lista-seleccionadas");
+// const contador = document.getElementById("contador");
 
 async function init() {
+
   fotos = await cargarFotos();
   console.log("INIT OK, fotos:", fotos);
 
+ 
   render();
 }
 
@@ -274,34 +314,65 @@ function renderGaleria() {
 }
 
 function renderCarrito() {
+  const carrito = document.getElementById("carrito");
+  const lista = document.getElementById("lista-seleccionadas");
+  const contador = document.getElementById("contador");
+  const tit = document.getElementById("carrito-titulo");
+
+  tit.textContent = `Fotos seleccionadas (${seleccionadas.length})`;
+  contador.textContent = seleccionadas.length;
+  contador.dataset.vacio = seleccionadas.length === 0;
   lista.innerHTML = "";
   contador.textContent = seleccionadas.length;
 
   if (seleccionadas.length === 0) {
-    lista.innerHTML = "<p>No hay fotos seleccionadas</p>";
+    lista.innerHTML = `
+    <div class="estado-vacio">
+      <span class="estado-icon"><span class="material-symbols-outlined">image</span></span>
+      <p>Aún no has seleccionado fotos</p>
+      <small>Explora los álbumes y elige tus favoritas</small>
+    </div>
+  `;
+    //  cerrar carrito automáticamente
+    carrito.classList.remove("abierto");
     return;
   }
 
-  seleccionadas.forEach(id => {
+  seleccionadas.forEach((id) => {
     const foto = fotos.find(f => f.id === id);
     if (!foto) return;
 
     const item = document.createElement("div");
-    item.className = "carrito-item";
+    item.className = "carrito-item", "item-seleccionada", "entrando";
 
     item.innerHTML = `
       <img src="${foto.src}" alt="${foto.titulo}">
-      <span>${foto.titulo}</span>
-      <button>Quitar</button>
+      <div>
+        <strong>${foto.titulo}</strong>
+      </div>
+      <button>Quitar<span class="material-symbols-outlined">delete</span></button>
     `;
 
     item.querySelector("button").addEventListener("click", () => {
-      quitarSeleccion(id);
+  quitarSeleccion(id);
+
+  mostrarUndoToast(
+    () => {
+      deshacerEliminado();
       render();
-    });
+    },
+    () => {
+      confirmarEliminado();
+    }
+  );
+
+  render();
+});
+
 
     lista.appendChild(item);
   });
+  
 }
 
 init();
