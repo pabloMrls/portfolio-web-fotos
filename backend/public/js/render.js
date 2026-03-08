@@ -1,5 +1,5 @@
 import { seleccionadas, sliderIndex, nextSlide, prevSlide, toggleSeleccion, quitarSeleccion, deshacerEliminado, confirmarEliminado} from "./state.js";
-import { fotos } from "./data.js";
+// import { fotos } from "./data.js";
 import { mostrarUndoToast } from "./ui/toast.js";
 import { renderBreadcrumb } from "./breadcrumb.js";
 
@@ -109,15 +109,81 @@ export function mostrarToast(mensaje) {
   }, 2000);
 }
 
+// export function renderAlbums(fotos, onSelectCategoria, rerender) {
+//   renderBreadcrumb([]);
+
+//   const app = document.getElementById("app");
+//   app.innerHTML = "";
+
+//   const title = document.createElement("h2");
+//   title.textContent ="Explora por categoría";
+//   title.className = "section-title";
+
+//   const grid = document.createElement("section");
+//   grid.className = "albums-grid";
+
+//   const grupos = {};
+
+//   fotos.forEach(foto => {
+//     if (!grupos[foto.categoria]) {
+//       grupos[foto.categoria] = [];
+//     }
+//     grupos[foto.categoria].push(foto);
+//   });
+
+//   Object.entries(grupos).forEach(([categoria, fotosCategoria]) => {
+//     const article = document.createElement("article");
+//     article.className = "album";
+//     article.tabIndex = 0;
+
+//     const previews = fotosCategoria
+//       .slice(0, 3)
+//       .map(f => `<img src="${f.src}" alt="">`)
+//       .join("");
+
+//     article.innerHTML = `
+//       <div class="album-preview">
+//         ${previews}
+//       </div>
+
+//       <div class="album-overlay">
+//         <h2>${categoria}</h2>
+//         <span>${fotosCategoria.length} fotos</span>
+//       </div>
+//     `;
+
+//     article.addEventListener("click", () => {
+//       onSelectCategoria(categoria);
+//       rerender();
+//     });
+
+//     article.addEventListener("keydown", e => {
+//       if (e.key === "Enter") {
+//         onSelectCategoria(categoria);
+//         rerender();
+//       }
+//     });
+
+//     grid.appendChild(article);
+//     app.appendChild(title);
+//   });
+
+//   app.appendChild(grid);
+ 
+// }
+
 export function renderAlbums(fotos, onSelectCategoria, rerender) {
   renderBreadcrumb([]);
 
   const app = document.getElementById("app");
   app.innerHTML = "";
 
+  // ===== TÍTULO CATEGORÍAS =====
   const title = document.createElement("h2");
-  title.textContent ="Explora por categoría";
+  title.textContent = "Explora por categoría";
   title.className = "section-title";
+
+  app.appendChild(title);
 
   const grid = document.createElement("section");
   grid.className = "albums-grid";
@@ -165,12 +231,27 @@ export function renderAlbums(fotos, onSelectCategoria, rerender) {
     });
 
     grid.appendChild(article);
-    app.appendChild(title);
   });
 
   app.appendChild(grid);
- 
+
+  // =========================================
+  // 👉 SECCIÓN EVENTOS (debajo de categorías)
+  // =========================================
+
+  const eventosSection = document.createElement("section");
+  eventosSection.className = "eventos-section";
+
+  eventosSection.innerHTML = `
+    <h2 class="section-title section-title--secondary">
+      Eventos recientes
+    </h2>
+    <div id="eventos-slider" class="eventos-grid"></div>
+  `;
+
+  app.appendChild(eventosSection);
 }
+
 
 export function renderFotosDeCategoria(fotos, categoria, rerender) {
   const app = document.getElementById("app");

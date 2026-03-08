@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar evento</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <header class="admin-header">
+        <h1 id="evento-nombre">Evento</h1>
+        <a href="/admin.html">← Volver a eventos</a>
+    </header>
+      <section class="subir-foto">
+    <h2>Subir foto</h2>
+
+    <form id="form-subir-foto" class="form-subir-foto">
+      <input type="text" name="titulo" placeholder="Título opcional">
+
+      <input type="number" name="precio" placeholder="Precio">
+
+      <input type="file" name="imagen" required>
+
+      <button type="submit">
+        Subir foto
+      </button>
+    </form>
+  </section>
+
+  <section class="evento-galeria">
+    <h2>Fotos del evento</h2>
+
+    <div id="evento-fotos-grid" class="fotos-grid"></div>
+  </section>
+   <div id="toast" class="toast"></div>
+
+  <script type="module" src="/js/admin/admin-evento.js"></script>
+
+</body>
+</html>

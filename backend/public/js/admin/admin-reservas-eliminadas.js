@@ -20,6 +20,9 @@ function renderReservas(reservas) {
     article.innerHTML = `
       <strong>${r.nombre}</strong> – ${r.email}<br>
       <p>${r.mensaje || "Sin mensaje"}</p>
+      <p class="reserva-total">
+  Total estimado: $${Number(r.total).toLocaleString("es-AR")}
+</p>
       <small>Estado: <b>${r.estado}</b></small><br><br>
 
       <button data-id="${r.id}" data-accion="restaurar">

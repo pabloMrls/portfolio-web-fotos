@@ -11,6 +11,29 @@ export let categoriaActiva = null;  // "bodas" | "runner" | "deporte"
 export const reservas = [];
 export let filtroActual = "todas";
 
+//isLoading
+export let isLoading = true;
+
+export function setAppLoaded () {
+  isLoading = false;
+}
+
+//extender el state del carrito
+export let eventoActivo = null;
+
+export function irAEvento(id) {
+  vista = "evento";
+  eventoActivo = id;
+}
+export function irAEventos() {
+  vista = "eventos";
+}
+
+export function salirDeEVento() {
+  vista = "albums";
+  eventoActivo = null;
+}
+
 export function agregarReserva(reserva){
   reservas.push(reserva);
 }
@@ -36,8 +59,13 @@ export function irAFotos (categoria) {
     vista = "fotos";
     categoriaActiva = categoria;
 }
- 
-//Deshacer eleimiado
+// Recordar la navegación
+ export function restaurarEstado(state) {
+  vista = state.vista;
+  categoriaActiva = state.categoriaActiva;
+  eventoActivo = state.eventoActivo;
+}
+//Deshacer eliminado
 
 export function quitarSeleccion(id) {
   ultimoEliminado = id;

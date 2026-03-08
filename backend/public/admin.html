@@ -1,38 +1,97 @@
 <!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Admin · Fotos</title>
-  <link rel="stylesheet" href="/css/admin.css">
-</head>
-<body>
-  <h1>Admin · Fotos</h1>
-<form id="form-foto" class="admin-form" enctype="multipart/form-data">
-  <input type="text" name="titulo" placeholder="Título" required />
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin · Fotos</title>
+    <link rel="stylesheet" href="/css/admin.css" />
+  </head>
+  <body>
+    <main class="admin">
+      <div class="admin-tabs">
+        <button id="btn-fotos-activas" class="tab active">Activas</button>
+        <button id="btn-fotos-papelera" class="tab">Papelera</button>
+      </div>
+      <section class="admin-fotos-section">
+        <h1 id="titulo-principal">Administrador de fotos</h1>
+        <div id="bloque-crear-foto">
+          <!-- 🔹 Controles de vista -->
+          <form id="form-foto" class="admin-form" enctype="multipart/form-data">
+            <input type="text" name="titulo" placeholder="Título" required />
 
-  <select name="categoria" required>
-    <option value="">Categoría</option>
-    <option value="Bodas">Bodas</option>
-    <option value="Runner">Runner</option>
-    <option value="Paisaje">Paisaje</option>
-    <option value="Deporte">Deporte</option>
-  </select>
+            <select name="categoria" required>
+              <option value="Categoria">Categoría</option>
+              <option value="Bodas">Bodas</option>
+              <option value="Runner">Runner</option>
+              <option value="Paisaje">Paisaje</option>
+              <option value="Cultura">Cultura</option>
+              <option value="Danza">Danza</option>
+              <option value="Deporte">Deporte</option>
+            </select>
+            <select name="evento_id">
+              <option value="">Sin evento (portfolio)</option>
+            </select>
+            <!-- <input type="file" name="imagen" accept="image/*" required /> -->
+            <input type="file" name="imagenes" multiple required />
+            <label>
+              Precio por foto
+              <input
+                type="number"
+                name="precio"
+                step="0.01"
+                min="0"
+                value="0"
+              />
+            </label>
+            <label>
+              Destacada
+              <input type="checkbox" name="destacada" />
+            </label>
 
-  <input type="file" name="imagen" accept="image/*" required />
+            <button type="submit">Subir fotos</button>
+          </form>
+        </div>
 
-  <label>
-    <input type="checkbox" name="destacada" />
-    Destacada
-  </label>
+        <section id="fotos-grid" class="admin-grid"></section>
 
-  <button type="submit">Agregar foto</button>
-</form>
+        <button id="btn-cargar-mas">Cargar más</button>
+      </section>
 
-  <main class="admin">
-    
-    <section id="fotos-grid" class="admin-grid"></section>
-  </main>
+      <section class="admin-eventos-section">
+        <div class="admin-tabs">
+          <button data-vista-eventos="activos" class="tab active">
+            Eventos activos
+          </button>
+          <button data-vista-eventos="papelera" class="tab">
+            Eventos papelera
+          </button>
+        </div>
+        <div id="bloque-crear-evento">
+          <h2>Crear evento</h2>
+          <form id="form-evento" enctype="multipart/form-data">
+            <input type="text" name="nombre" placeholder="Nombre" required />
+            <textarea name="descripcion" placeholder="Descripción"></textarea>
+            <input type="date" name="fecha" required />
+            <input type="file" name="portada" accept="image/*" required />
+            <input type="file" name="imagenes" multiple accept="image/*" />
 
-  <script type="module" src="/js/admin.js"></script>
-</body>
+            <label>
+              <input type="checkbox" name="destacado" />
+              Destacado
+            </label>
+            <input
+              type="number"
+              name="precio"
+              placeholder="Precio por foto"
+              step="0.01"
+            />
+            <button type="submit">Crear evento</button>
+          </form>
+        </div>
+      </section>
+      <h2 id="titulo-eventos">Eventos existentes</h2>
+      <div id="eventos-admin-grid"></div>
+    </main>
+    <div id="toast" class="toast"></div>
+    <script type="module" src="/js/admin.js"></script>
+  </body>
 </html>

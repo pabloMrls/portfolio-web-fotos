@@ -35,3 +35,22 @@ export function mostrarConfirmacion(texto = "Reserva enviada correctamente") {
     toast.classList.remove("visible");
   }, 3000);
 }
+
+// ui/toast.js
+
+export function mostrarToast(mensaje, tipo = "success") {
+
+  const toast = document.getElementById("toast");
+
+  if (!toast) return;
+
+  toast.textContent = mensaje;
+
+  toast.classList.remove("success","error");
+  toast.classList.add("visible", tipo);
+
+  setTimeout(() => {
+    toast.classList.remove("visible");
+  }, 3000);
+
+}

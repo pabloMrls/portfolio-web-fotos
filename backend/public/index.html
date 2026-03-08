@@ -2,8 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="Fotografía deportiva, retratos y pasaijes. Capturando momentos reales con una mirada auténtica"
+    />
+    <meta property="og:title" content="José Luis | Fotografía deportiva" />
+    <meta
+      property="og:description"
+      content="Capturando momentos reales en fotografía deportiva, retratos y paisajes."
+    />
+    <meta property="og:image" content="/img/deportes/deporteFuerza.jpg" />
+    <meta property="og:type" content="website" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/styles.css" />
+    
     <link
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
       rel="stylesheet"
@@ -14,66 +25,114 @@
       href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
-    <title>Portfolio fotografia</title>
+    <base href="/">
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script type="module" src="/js/mainTest.js"></script>
+    
+    <title>José Luís | Fotografía deportiva, retratos y paisajes</title>
   </head>
+
   <body>
+    <!--Header-->
     <header class="header-principal">
       <nav class="nav">
-        <div class="nav-container">
-          <span class="logo">web fotos</span>
+        <div class="container nav-container">
+          <span class="logo">José luís</span>
 
-          <ul class="nav-links">
-            <li><a href="#" class="active">Galería</a></li>
-            <li><a href="#">Contacto</a></li>
+          <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú">
+            ☰
+          </button>
+
+          <ul class="nav-links" id="nav-links">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#galeria">Galería</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#contacto">Contacto</a></li>
           </ul>
         </div>
       </nav>
+      <div class="nav-overlay" id="nav-overlay"></div>
     </header>
 
-    <!--Contenido html no dinámico-->
-    <button id="btn-carrito" class="carrito-toggle">
-      <span class="material-symbols-outlined">shopping_cart</span> <span id="contador">0</span>
-    </button>
-
-    <aside id="carrito" class="carrito cerrado">
-      <header class="carrito-header">
-        <h3 id="carrito-titulo"></h3>
-        <button id="cerrar-carrito" class="btn-carrito">✕</button>
-      </header>
-
-      <div id="lista-seleccionadas" class="carrito-lista"></div>
-
-      <footer class="carrito-footer">
-        <button id="btn-limpiar" class="btn-secundario">
-          Limpiar <span class="material-symbols-outlined">delete_forever</span>
-        </button>
-        <button class="btn-primario">Reservar</button>
-      </footer>
-    </aside>
-
-    <!-- section hero -->
-    <!-- <section class="hero">
-      <div class="hero-content">
-        <h2>Capturando momentos reales</h2>
-        <p>Fotografía deportiva, retratos y paisajes</p>
-        <a href="#galeria" class="btn-primary">Ver galería</a>
-      </div>
-    </section> -->
+    <!--Hero -->
     <section class="hero">
-      <div class="hero-text">
-        <h1 class="hero-title">Capturando momentos reales</h1>
-        <p class="hero-subtitle">Fotografía deportiva, retratos y paisajes</p>
-        <a href="#galeria" class="hero-cta">Ver galería</a>
+      <div class="container hero-container">
+        <div class="hero-text">
+          <h1 class="hero-title">Capturando momentos reales</h1>
+          <p class="hero-subtitle">Fotografía deportiva, retratos y paisajes</p>
+          <a href="#servicios" class="hero-cta">Solicitar sesión</a>
+        </div>
+
+        <div class="vista-lg">
+          <img src="/img/deportes/deporteFuerza.jpg" alt="" />
+        </div>
       </div>
     </section>
 
+    <section id="servicios" class="servicios">
+      <div class="container">
+        <h2>Tipos de fotografía</h2>
+
+        <div class="servicios-grid">
+          <article class="servicio">
+            <img
+              src="/img/1772237732095-pexels-paz-shots-1574104-3025620.jpg"
+            />
+            <div class="servicio-overlay">
+              <h3>Retratos</h3>
+            </div>
+          </article>
+
+          <article class="servicio">
+            <img src="/img/deportes/deporteFuerza.JPG" />
+            <div class="servicio-overlay">
+              <h3>Fotografía deportiva</h3>
+            </div>
+          </article>
+
+          <article class="servicio">
+            <img src="/img/1772808802323-pexels-fukajaz-12318786.jpg" />
+            <div class="servicio-overlay">
+              <h3>Paisajes</h3>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!--Panel-->
     <div id="panel"></div>
-    <!--Breadcrumb-->
-    <nav id="breadcrumb" aria-label="breadcrumb"></nav>
-    <!--Aplicacion-->
-    <div id="app"></div>
+
+    <div class="container">
+      <!--Breadcrumb-->
+      <nav id="breadcrumb" aria-label="breadcrumb"></nav>
+    </div>
+    <!--Galería dinámica-->
+    <section class="galeria-section">
+      <div class="container">
+        <div id="app"></div>
+      </div>
+    </section>
+
+    <!--Home eventos-->
+    <section class="home-eventos">
+      <div class="container">
+        <div class="section-header">
+          <h2>Eventos recientes</h2>
+          <a href="#" id="ver-todos-eventos" class="link-ver-todos"
+            >Ver todos</a
+          >
+        </div>
+
+        <div class="eventos-slider" id="eventos-slider">
+          <!-- Cards renderizadas dinámicamente -->
+        </div>
+      </div>
+    </section>
+
+    <!--Footer-->
     <footer class="footer">
-      <div class="footer-container">
+      <div class="container footer-container">
         <!-- Identidad -->
         <section class="footer-brand">
           <h3>José Luis</h3>
@@ -115,8 +174,31 @@
     </footer>
 
     <div id="toast" class="toast"></div>
-    <!-- Mdal de reserva-->
 
+    <!--Contenido html no dinámico-->
+
+    <button id="btn-carrito" class="carrito-toggle">
+      <span class="material-symbols-outlined">shopping_cart</span>
+      <span id="contador">0</span>
+    </button>
+
+    <aside id="carrito" class="carrito cerrado">
+      <header class="carrito-header">
+        <h3 id="carrito-titulo"></h3>
+        <button id="cerrar-carrito" class="btn-carrito">✕</button>
+      </header>
+
+      <div id="lista-seleccionadas" class="carrito-lista"></div>
+
+      <footer class="carrito-footer">
+        <button id="btn-limpiar" class="btn-secundario">
+          Limpiar <span class="material-symbols-outlined">delete_forever</span>
+        </button>
+        <button class="btn-primario">Reservar</button>
+      </footer>
+    </aside>
+
+    <!-- Modal de reserva -->
     <div id="modal-reserva" class="modal hidden" aria-hidden="true">
       <div class="modal-backdrop"></div>
 
@@ -129,14 +211,11 @@
         </header>
 
         <div class="modal-body">
-          <p class="modal-subtitle">
-            Completá tus datos y te contactaremos a la brevedad.
+          <p id="modal-subtitle" class="modal-subtitle">
+            Revisá el resumen antes de enviar tu reserva.
           </p>
 
-          <p class="modal-resumen">
-            Fotos seleccionadas:
-            <strong><span id="reserva-cantidad">0</span></strong>
-          </p>
+          <div id="resumen-reserva" class="modal-resumen"></div>
 
           <form id="form-reserva">
             <label>
@@ -165,9 +244,46 @@
               <button type="submit" class="btn-primario">Enviar reserva</button>
             </div>
           </form>
+
+          <div id="estado-exito" class="hidden">
+            <div class="reserva-exito">
+              <span class="material-symbols-outlined success-icon">
+                check_circle
+              </span>
+
+              <h3>Reserva enviada correctamente</h3>
+
+              <p>
+                En breve te enviaremos la confirmación y los detalles para
+                continuar.
+              </p>
+
+              <small class="nota-secundaria">
+                Si no recibís respuesta dentro de 24 horas, revisá tu bandeja de
+                spam.
+              </small>
+
+              <button class="btn-primario" id="cerrar-exito">Cerrar</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
+    <!--Modal Preview Fotos-->
+    <div id="modal-preview" class="preview hidden">
+      <div class="preview-backdrop"></div>
+
+      <div class="preview-content">
+        <button class="preview-close" id="preview-close">✕</button>
+
+        <button class="preview-nav prev" id="preview-prev">‹</button>
+
+        <img id="preview-img" src="" alt="Vista ampliada" />
+
+        <button class="preview-nav next" id="preview-next">›</button>
+      </div>
+    </div>
+
   </body>
-  <script type="module" src="js/main.js"></script>
 </html>

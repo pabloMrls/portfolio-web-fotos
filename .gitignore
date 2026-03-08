@@ -1,6 +1,20 @@
+# Node
 node_modules/
-backend/node_modules/
+
+# Environment variables
+.env
+
+# Editor
 .vscode/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
 # Base de datos local
-backend/db/*.db
 *.db
+
+# Sistema operativo
+.DS_Store
+Thumbs.db

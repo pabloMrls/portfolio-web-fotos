@@ -1,3 +1,4 @@
+console.log("MAIN VIEJO ACTIVO");
 
 import {
   limpiarSeleccion,
@@ -10,7 +11,7 @@ import {
 
 
 import { renderPanel } from "./render.js";
-import { renderAlbums, renderFotosDeCategoria } from "./render.js";
+import { renderAlbums, renderFotosDeCategoria} from "./render.js";
 import { renderBreadcrumb } from "./breadcrumb.js";
 import { renderSlider } from "./render.js";
 import { mostrarConfirmacion } from "./ui/toast.js";
@@ -58,7 +59,7 @@ let fotos = [];
     const destacadas = fotos.filter(f => f.destacada);
     renderSlider(destacadas, render);
   }
-
+   cargarEventosHome();
   if (vista === "fotos") {
     renderFotosDeCategoria(
       fotos,
@@ -188,8 +189,26 @@ btnLimpiarCarrito.addEventListener("click", () => {
   
 });
 
+async function cargarEventosHome() {
+  try {
+    const res = await fetch("/api/eventos");
+    const eventos = await res.json();
+
+    renderEventosHome(
+      eventos.slice(0, 6),
+      (eventoId) => {
+        console.log("Ir al evento", eventoId);
+        // más adelante navegación
+      }
+    );
+  } catch (err) {
+    console.error("Error cargando eventos:", err);
+  }
+}
+
 
 async function init() {
+
   fotos = await cargarFotos();
   console.log("📸 Fotos cargadas:", fotos);
   render();

@@ -8,6 +8,17 @@ body {
 h1 {
   margin-bottom: 24px;
 }
+
+.admin-fotos-section {
+  margin-bottom: 60px;
+}
+
+.admin-eventos-section {
+  border-top: 1px solid #ddd;
+  padding-top: 40px;
+}
+
+
 /*Filtrar por estados*/
 .filtros {
     display: flex;
@@ -253,7 +264,7 @@ h1 {
 /* ===== Acciones ===== */
 .admin-foto button {
   border: none;
-  background: #f44336;
+  background: #DB243F;
   color: white;
   padding: 10px;
   cursor: pointer;
@@ -264,3 +275,328 @@ h1 {
   background: #d32f2f;
 }
 
+/*Admin evento*/
+.admin-evento {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #ebe8e8;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  color: rgb(31, 26, 26);
+}
+
+.admin-evento img {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.admin-evento strong {
+  flex: 1;
+  font-size: 1rem;
+}
+
+.admin-evento button {
+  background: #DB243F;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  transition: 0.2s ease;
+}
+button.btn-gestionar  {
+  background: #1b2021;
+}
+.admin-evento button:hover {
+  background: #e60000;
+}
+
+
+#form-evento {
+  background: #FDFFFC;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#form-evento input,
+#form-evento textarea {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #726b6b;
+  background: #f4f4f8;
+  color: rgb(99, 92, 92);
+}
+
+#form-evento button {
+  background: #7F5AF0;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+#form-evento button:hover {
+  opacity: 0.9;
+}
+
+button.btn-editar {
+    background-color: #1b2021; /* azul */
+}
+
+#btn-cargar-mas {
+  display: block;
+  margin: 40px auto;
+  padding: 10px 20px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+.admin-actions {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  margin-top: 8px;
+}
+
+.admin-actions button  {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button.btn-editar-foto:hover {
+  background-color: #2563eb;
+}
+
+button.btn-eliminar {
+   background: #DB243F;
+}
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #222;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 6px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.toast.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.toast button {
+  margin-left: 12px;
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  cursor: pointer;
+}
+.toast.success {
+  background: #16a34a;
+}
+
+.toast.error {
+  background: #dc2626;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.precio-input.guardando {
+  border-color: orange;
+}
+
+.precio-input.guardado {
+  border-color: #4CAF50;
+}
+.tab {
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  background: #f5f5f5;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.tab.active {
+  background: #111;
+  color: white;
+}
+
+.estado-vacio {
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+  margin: 0 auto;
+}
+
+/*
+*Grid de eventos
+*/
+#evento-fotos-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:16px;
+}
+
+.admin-foto{
+  position:relative;
+  border-radius:10px;
+  overflow:hidden;
+ 
+}
+
+.admin-overlay{
+  position:absolute;
+  inset:0;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+
+  padding:10px;
+
+  background:linear-gradient(
+    transparent,
+    rgba(0,0,0,0.65)
+  );
+
+  opacity:0;
+  transition:opacity .2s ease;
+}
+.precio-input{
+  width:70px;
+  padding:4px 6px;
+  border-radius:6px;
+  border:none;
+}
+
+.admin-foto:hover .admin-overlay{
+  opacity:1;
+}
+
+.btn-eliminar-foto{
+  align-self:flex-end;
+
+  background:#e53935;
+  color:white;
+  border:none;
+
+  width:32px;
+  height:32px;
+
+  border-radius:6px;
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/*
+Formulario para subir fotos
+*/
+
+.form-subir-foto{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+
+  align-items:center;
+
+  padding:16px;
+
+  background:#f6f6f6;
+  border-radius:10px;
+
+  margin-bottom:20px;
+}
+
+.form-subir-foto input[type="text"],
+.form-subir-foto input[type="number"]{
+
+  padding:8px 10px;
+
+  border:1px solid #ddd;
+  border-radius:6px;
+
+  font-size:14px;
+
+  outline:none;
+}
+
+.form-subir-foto input[type="file"] {
+  padding: 8px 10px;
+  background: #f0f3f5;
+}
+.form-subir-foto input:focus{
+  border-color:#111;
+}
+
+.form-subir-foto input[type="file"]{
+  font-size:13px;
+}
+
+.form-subir-foto button{
+
+  background:#111;
+  color:white;
+
+  border:none;
+
+  padding:8px 14px;
+
+  border-radius:6px;
+
+  cursor:pointer;
+
+  font-size:14px;
+
+  transition:background .2s ease;
+}
+
+.form-subir-foto button:hover{
+  background:#333;
+}
+
+.admin-evento-header{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+
+  margin-bottom:20px;
+}
+
+.admin-header a {
+  text-decoration: none;
+  background: #1b2021;
+  padding: 8px 12px;
+  border-radius: 12px;
+  color: #fdfdfd;
+}
