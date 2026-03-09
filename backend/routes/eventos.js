@@ -67,15 +67,14 @@ router.post(
 
     await pool.query(
       `
-      INSERT INTO fotos (titulo, categoria, evento_id, src, destacada)
-      VALUES ($1, $2, $3, $4, $5)
+      INSERT INTO fotos (titulo, categoria, evento_id, src)
+      VALUES ($1, $2, $3, $4)
       `,
       [
         req.file.originalname,
         null,
         id,
         ruta,
-        false
       ]
     );
 

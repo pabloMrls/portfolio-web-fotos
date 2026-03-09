@@ -2841,6 +2841,24 @@ Ocultar home fuera del home
 }
 /* Mobile */
 @media (max-width: 599px) {
+  .hero-cta {
+  background: #1d1c1c;
+  border: 1px solid rgba(24, 157, 210, 0.6);
+  padding: 12px 28px;
+  border-radius: 30px;
+  backdrop-filter: blur(6px);
+  transition: 0.3s ease;
+  text-decoration: none;
+  color: #171616;
+  width: 120px;
+}
+
+.hero-cta:hover {
+  /* opacity: 1; */
+  background: #1a191f;
+  color: white;
+}
+
   .fotos-grid {
     grid-template-columns: 1fr;
   }
