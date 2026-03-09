@@ -83,7 +83,7 @@ router.post(
       const { rows } = await pool.query(
         `
         INSERT INTO fotos (titulo, categoria, src, precio, evento_id)
-        VALUES ($1,$2,$3,$4,$5,)
+        VALUES ($1,$2,$3,$4,$5)
         RETURNING *
         `,
         [
