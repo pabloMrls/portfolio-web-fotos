@@ -60,7 +60,12 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
-const allowedOrigins = ["http://localhost:5173", "http://localhost:3000"];
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "https://portfolio-web-fotos.onrender.com"
+];
+
 app.use(
   helmet({
     contentSecurityPolicy: false,
