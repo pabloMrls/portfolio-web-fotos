@@ -18,3 +18,5 @@ yarn-error.log*
 # Sistema operativo
 .DS_Store
 Thumbs.db
+
+postgresql://neondb_owner:npg_2ZGuwATYC8Bd@ep-noisy-block-acog70fz-pooler.sa-east-1.aws.neon.tech/web_fotos?sslmode=require&channel_binding=require

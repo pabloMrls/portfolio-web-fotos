@@ -82,15 +82,14 @@ router.post(
       const titulo = path.parse(file.originalname).name;
       const { rows } = await pool.query(
         `
-        INSERT INTO fotos (titulo, categoria, src, destacada, precio, evento_id)
-        VALUES ($1,$2,$3,$4,$5,$6)
+        INSERT INTO fotos (titulo, categoria, src, precio, evento_id)
+        VALUES ($1,$2,$3,$4,$5,)
         RETURNING *
         `,
         [
           titulo,
           categoria ?? null,
           src,
-          destacada === "true",
           precioFinal,
           evento_id ? Number(evento_id) : null
         ]
