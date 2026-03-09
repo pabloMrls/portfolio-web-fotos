@@ -66,7 +66,7 @@ router.post(
   upload.array("imagenes", 100),
   asyncHandler(async (req, res) => {
 
-    const {  categoria, precio, destacada, evento_id } = req.body;
+    const {  categoria, precio,  evento_id } = req.body;
 
     if (!req.files || req.files.length === 0) {
       return res.status(400).json({ error: "Imágenes requeridas" });
@@ -80,6 +80,8 @@ router.post(
 
       const src = `/img/${file.filename}`;
       const titulo = path.parse(file.originalname).name;
+      console.log("FILES:", req.files);
+      console.log("BODY:", req.body);
       const { rows } = await pool.query(
         `
         INSERT INTO fotos (titulo, categoria, src, precio, evento_id)
