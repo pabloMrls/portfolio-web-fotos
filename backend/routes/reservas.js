@@ -17,7 +17,7 @@ router.get(
   "/",
   asyncHandler(async (req, res) => {
     const { rows } = await pool.query(
-      "SELECT * FROM reservas ORDER BY fecha DESC",
+      "SELECT * FROM public.reservas ORDER BY fecha DESC",
     );
 
     res.json(rows);
@@ -67,7 +67,7 @@ router.post(
     // Insert si no es duplicado
     const { rows } = await pool.query(
       `
-      INSERT INTO reservas (nombre, email, mensaje, fotos, total)
+      INSERT INTO public.reservas (nombre, email, mensaje, fotos, total)
       VALUES ($1, $2, $3, $4, $5)
       RETURNING *
       `,
@@ -75,7 +75,7 @@ router.post(
         nombre,
         email,
         mensaje ?? "",
-        JSON.stringify(fotosDB), 
+        fotosDB, 
         total ?? 0
       ],
     );
@@ -99,7 +99,7 @@ router.patch(
 
     const result = await pool.query(
       `
-      UPDATE reservas
+      UPDATE public.reservas
       SET estado = $1
       WHERE id = $2
       RETURNING *
