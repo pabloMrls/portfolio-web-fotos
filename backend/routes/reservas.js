@@ -67,7 +67,7 @@ router.post(
     // Insert si no es duplicado
     const { rows } = await pool.query(
       `
-      INSERT INTO public.reservas (nombre, email, mensaje, fotos, total)
+      INSERT INTO reservas (nombre, email, mensaje, fotos, total)
       VALUES ($1, $2, $3, $4, $5)
       RETURNING *
       `,
@@ -99,7 +99,7 @@ router.patch(
 
     const result = await pool.query(
       `
-      UPDATE public.reservas
+      UPDATE reservas
       SET estado = $1
       WHERE id = $2
       RETURNING *
