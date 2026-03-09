@@ -130,10 +130,10 @@ router.post(
     const titulo = path.parse(file.originalname).name;
     const ruta = `/img/eventos/${file.filename}`;
 
-    const base = index * 6;
+    const base = index * 5;
 
     placeholders.push(
-      `($${base + 1}, $${base + 2}, $${base + 3}, $${base + 4}, $${base + 5}, $${base + 6} )`
+      `($${base + 1}, $${base + 2}, $${base + 3}, $${base + 4}, $${base + 5} )`
     );
 
     values.push(
@@ -149,7 +149,7 @@ router.post(
 
   await pool.query(
     `
-    INSERT INTO fotos (titulo, categoria, evento_id, src, destacada, precio)
+    INSERT INTO fotos (titulo, categoria, evento_id, src,  precio)
     VALUES ${placeholders.join(",")}
     `,
     values
