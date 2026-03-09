@@ -12,8 +12,9 @@ export const pool = new Pool({
     : false
 });
 
-pool.on("connect", () => {
+pool.on("connect", async () => {
   console.log("PostgreSQL conectado");
+  await pool.query("SET search_path TO public");
 });
 
 pool.on("error", (err) => {
