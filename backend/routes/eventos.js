@@ -141,7 +141,6 @@ router.post(
       null,
       eventoId,
       ruta,
-      false,
       Number(precio) || 0
     );
 
