@@ -17,7 +17,7 @@ router.get(
   "/",
   asyncHandler(async (req, res) => {
     const { rows } = await pool.query(
-      "SELECT * FROM public.reservas ORDER BY fecha DESC",
+      "SELECT * FROM reservas ORDER BY fecha DESC",
     );
 
     res.json(rows);
@@ -63,19 +63,24 @@ router.post(
         error: "Ya enviaste esta reserva. Te contactaremos pronto.",
       });
     }
-
+    if (fotosDB.length === 0) {
+  return res.status(400).json({
+    error: "Las fotos seleccionadas no existen"
+  });
+}
+    console.log("FOTOS QUE SE GUARDAN:", fotosDB);
     // Insert si no es duplicado
     const { rows } = await pool.query(
       `
       INSERT INTO reservas (nombre, email, mensaje, fotos, total)
-      VALUES ($1, $2, $3, $4, $5)
+      VALUES ($1, $2, $3, $4::jsonb, $5)
       RETURNING *
       `,
       [
         nombre,
         email,
         mensaje ?? "",
-        fotosDB, 
+        JSON.stringify(fotosDB), 
         total ?? 0
       ],
     );
