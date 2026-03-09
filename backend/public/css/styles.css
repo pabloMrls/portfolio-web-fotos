@@ -230,11 +230,12 @@ body {
   text-decoration: none;
   color: #171616;
   width: 120px;
+  z-index: 3;
 }
 
 .hero-cta:hover {
   /* opacity: 1; */
-  background: #2810b5;
+  background: #070224;
   color: white;
 }
 
@@ -2841,7 +2842,7 @@ Ocultar home fuera del home
 }
 /* Mobile */
 @media (max-width: 599px) {
-  .hero-cta {
+  .hero-cta a {
   background: #1d1c1c;
   border: 1px solid rgba(24, 157, 210, 0.6);
   padding: 12px 28px;

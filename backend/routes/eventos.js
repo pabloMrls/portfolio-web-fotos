@@ -1,18 +1,19 @@
 import express from "express";
 import { pool } from "../db/postgres.js";
+import storage from "../services/cloudinaryStorage.js";
 import multer from "multer";
 import path from "path";
 import { asyncHandler } from "../middlewares/asyncHandler.js";
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "public/img/eventos");
-  },
-  filename: (req, file, cb) => {
-    const uniqueName = Date.now() + path.extname(file.originalname);
-    cb(null, uniqueName);
-  }
-});
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "public/img/eventos");
+//   },
+//   filename: (req, file, cb) => {
+//     const uniqueName = Date.now() + path.extname(file.originalname);
+//     cb(null, uniqueName);
+//   }
+// });
 
 const upload = multer({storage});
 
@@ -63,7 +64,8 @@ router.post(
       return res.status(400).json({ error: "No se subió imagen" });
     }
 
-    const ruta = `/img/eventos/${req.file.filename}`;
+    // const ruta = `/img/eventos/${req.file.filename}`;
+    const ruta = req.file.path;
 
     await pool.query(
       `
@@ -98,8 +100,8 @@ router.post(
       return res.status(400).json({ error: "Falta portada" });
     }
 
-    const portadaPath = `/img/eventos/${req.files.portada[0].filename}`;
-
+    // const portadaPath = `/img/eventos/${req.files.portada[0].filename}`;
+    const portadaPath = req.files.portada[0].path;
     const { rows } = await pool.query(
       `
       INSERT INTO eventos (nombre, descripcion, fecha, portada, destacado, precio)
@@ -126,13 +128,15 @@ router.post(
 
   req.files.imagenes.forEach((file, index) => {
 
+    const ruta = file.path;
     const titulo = path.parse(file.originalname).name;
-    const ruta = `/img/eventos/${file.filename}`;
-
-    const base = index * 5;
+    const public_id = file.filename;
+    // const ruta = `/img/eventos/${file.filename}`;
+    
+    const base = index * 6;
 
     placeholders.push(
-      `($${base + 1}, $${base + 2}, $${base + 3}, $${base + 4}, $${base + 5} )`
+      `($${base + 1}, $${base + 2}, $${base + 3}, $${base + 4}, $${base + 5}, $${base + 6} )`
     );
 
     values.push(
@@ -140,6 +144,7 @@ router.post(
       null,
       eventoId,
       ruta,
+      public_id,
       Number(precio) || 0
     );
 
@@ -147,7 +152,7 @@ router.post(
 
   await pool.query(
     `
-    INSERT INTO fotos (titulo, categoria, evento_id, src,  precio)
+    INSERT INTO fotos (titulo, categoria, evento_id, src, public_id  precio)
     VALUES ${placeholders.join(",")}
     `,
     values

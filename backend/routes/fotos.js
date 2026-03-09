@@ -1,25 +1,26 @@
 import express from "express";
 import multer from "multer";
+import storage from "../services/cloudinaryStorage.js";
 import path from "path";
-import { fileURLToPath } from "url";
+// import { fileURLToPath } from "url";
 import { pool } from "../db/postgres.js";
 import { asyncHandler } from "../middlewares/asyncHandler.js";
 
 const router = express.Router();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
 // Configuración multer (se mantiene igual)
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, "../public/img"));
-  },
-  filename: (req, file, cb) => {
-    const uniqueName = Date.now() + "-" + file.originalname;
-    cb(null, uniqueName);
-  },
-});
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, path.join(__dirname, "../public/img"));
+//   },
+//   filename: (req, file, cb) => {
+//     const uniqueName = Date.now() + "-" + file.originalname;
+//     cb(null, uniqueName);
+//   },
+// });
 
 const upload = multer({ storage });
 pool.query("SELECT current_database()")
@@ -61,37 +62,84 @@ router.get("/", asyncHandler(async (req, res) => {
 }));
 
 // POST foto
+// router.post(
+//   "/",
+//   upload.array("imagenes", 100),
+//   asyncHandler(async (req, res) => {
+
+//     const {  categoria, precio,  evento_id } = req.body;
+
+//     if (!req.files || req.files.length === 0) {
+//       return res.status(400).json({ error: "Imágenes requeridas" });
+//     }
+
+//     const precioFinal = precio ? Number(precio) : 0;
+  
+//     const inserted = [];
+
+//     for (const file of req.files) {
+//       const src = file.path;
+//       // const src = `/img/${file.filename}`;
+//       const titulo = path.parse(file.originalname).name;
+//       console.log("FILES:", req.files);
+//       console.log("BODY:", req.body);
+//       const { rows } = await pool.query(
+//         `
+//         INSERT INTO fotos (titulo, categoria, src, precio, evento_id)
+//         VALUES ($1,$2,$3,$4,$5)
+//         RETURNING *
+//         `,
+//         [
+//           titulo,
+//           categoria ?? null,
+//           src,
+//           precioFinal,
+//           evento_id ? Number(evento_id) : null
+//         ]
+//       );
+
+//       inserted.push(rows[0]);
+//     }
+
+//     res.status(201).json(inserted);
+//   })
+// );
+
 router.post(
   "/",
   upload.array("imagenes", 100),
   asyncHandler(async (req, res) => {
 
-    const {  categoria, precio,  evento_id } = req.body;
+    const { categoria, precio, evento_id } = req.body;
 
     if (!req.files || req.files.length === 0) {
       return res.status(400).json({ error: "Imágenes requeridas" });
     }
 
     const precioFinal = precio ? Number(precio) : 0;
-  
+
     const inserted = [];
+
+    console.log("FILES:", req.files);
+    console.log("BODY:", req.body);
 
     for (const file of req.files) {
 
-      const src = `/img/${file.filename}`;
+      const src = file.path;
+      const public_id = file.filename;
       const titulo = path.parse(file.originalname).name;
-      console.log("FILES:", req.files);
-      console.log("BODY:", req.body);
+
       const { rows } = await pool.query(
         `
-        INSERT INTO fotos (titulo, categoria, src, precio, evento_id)
-        VALUES ($1,$2,$3,$4,$5)
+        INSERT INTO fotos (titulo, categoria, src, public_id, precio, evento_id)
+        VALUES ($1,$2,$3,$4,$5,$6)
         RETURNING *
         `,
         [
           titulo,
           categoria ?? null,
           src,
+          public_id,
           precioFinal,
           evento_id ? Number(evento_id) : null
         ]
@@ -103,6 +151,7 @@ router.post(
     res.status(201).json(inserted);
   })
 );
+
 // router.post(
 //   "/",
 //   upload.single("imagen"),
@@ -258,15 +307,44 @@ router.delete(
     res.json({ message: "Foto eliminada" });
   })
 );
+// router.delete("/:id/permanent", asyncHandler(async (req, res) => {
+//   const { id } = req.params;
+
+//   await pool.query(`
+//     DELETE FROM fotos
+//     WHERE id = $1
+//   `, [id]);
+
+//   res.json({ ok: true });
+// }));
 router.delete("/:id/permanent", asyncHandler(async (req, res) => {
+
   const { id } = req.params;
 
-  await pool.query(`
-    DELETE FROM fotos
-    WHERE id = $1
-  `, [id]);
+  // 1️⃣ obtener el public_id
+  const { rows } = await pool.query(
+    `SELECT public_id FROM fotos WHERE id = $1`,
+    [id]
+  );
+
+  if (rows.length === 0) {
+    return res.status(404).json({ error: "Foto no encontrada" });
+  }
+
+  const public_id = rows[0].public_id;
+
+  // 2️⃣ eliminar de Cloudinary
+  if (public_id) {
+    await cloudinary.uploader.destroy(public_id);
+  }
+
+  // 3️⃣ eliminar de PostgreSQL
+  await pool.query(
+    `DELETE FROM fotos WHERE id = $1`,
+    [id]
+  );
 
   res.json({ ok: true });
-}));
 
+}));
 export default router;

@@ -182,12 +182,15 @@ h1 {
   box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: auto;
 
   margin-bottom: 32px;
 }
-
+.precio label{
+  width: 120px;
+  background: #22c55e;
+}
 .admin-form input,
 .admin-form select {
   padding: 10px 12px;

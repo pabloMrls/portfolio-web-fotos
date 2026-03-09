@@ -8,7 +8,9 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import cors from "cors";
 import { pool } from "./db/postgres.js";
-
+console.log("CLOUD:", process.env.CLOUDINARY_CLOUD_NAME);
+console.log("KEY:", process.env.CLOUDINARY_API_KEY);
+console.log("SECRET:", process.env.CLOUDINARY_API_SECRET);
 //Temporarl
 pool
   .query("SELECT 1")
