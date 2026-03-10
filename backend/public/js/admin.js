@@ -1,4 +1,4 @@
-import { mostrarToast } from "js/ui/toast.js";
+import { mostrarToast } from "../ui/toast.js";
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -239,31 +239,31 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.classList.toggle("active", btn.dataset.vistaEventos === vistaEventos);
     });
   }
-  // function mostrarToastUndo(mensaje, onUndo) {
-  //   const toast = document.getElementById("admin-toast");
+  function mostrarToastUndo(mensaje, onUndo) {
+    const toast = document.getElementById("admin-toast");
 
-  //   if (!toast) {
-  //     console.error("admin-toast no existe en el DOM");
-  //     return;
-  //   }
+    if (!toast) {
+      console.error("admin-toast no existe en el DOM");
+      return;
+    }
 
-  //   toast.innerHTML = `
-  //   <span>${mensaje}</span>
-  //   <button id="undo-btn">Deshacer</button>
-  // `;
+    toast.innerHTML = `
+    <span>${mensaje}</span>
+    <button id="undo-btn">Deshacer</button>
+  `;
 
-  //   toast.classList.add("visible");
+    toast.classList.add("visible");
 
-  //   const timeout = setTimeout(() => {
-  //     toast.classList.remove("visible");
-  //   }, 5000);
+    const timeout = setTimeout(() => {
+      toast.classList.remove("visible");
+    }, 5000);
 
-  //   document.getElementById("undo-btn").addEventListener("click", () => {
-  //     clearTimeout(timeout);
-  //     toast.classList.remove("visible");
-  //     onUndo();
-  //   });
-  // }
+    document.getElementById("undo-btn").addEventListener("click", () => {
+      clearTimeout(timeout);
+      toast.classList.remove("visible");
+      onUndo();
+    });
+  }
 
   // function mostrarToast(mensaje, tipo = "success") {
   //   const toast = document.getElementById("admin-toast");
