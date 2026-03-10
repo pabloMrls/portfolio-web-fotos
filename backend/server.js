@@ -40,7 +40,7 @@ import eventosRouter from "./routes/eventos.js";
 const PORT = process.env.PORT || 3000;
 
 const app = express();
-
+app.set("trust proxy", 1);
 app.disable("x-powered-by");
 
 if (process.env.NODE_ENV !== "test") {
