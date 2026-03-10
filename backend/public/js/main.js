@@ -1,7 +1,7 @@
 console.log("MAIN TEST ACTIVO");
 
-import { renderBreadcrumb } from "./breadcrumb.js";
-import { cargarFotos, enviarReserva } from "./api.js";
+import { renderBreadcrumb } from "js/breadcrumb.js";
+import { cargarFotos, enviarReserva } from "js/api.js";
 import {
   seleccionadas,
   toggleSeleccion,
@@ -21,20 +21,20 @@ import {
   eventoActivo,
   salirDeEVento,
   restaurarEstado
-} from "./state.js";
+} from "js/state.js";
 
 // import {
 //   mostrarToast,
 //   renderAlbums,
 //   renderFotosDeCategoria,
 // } from "./render.js";
-import { mostrarUndoToast, mostrarConfirmacion } from "../ui/toast.js";
+import { mostrarUndoToast} from "js/ui/toast.js";
 
 import {
   renderAlbums,
   renderFotosDeCategoria,
   renderSlider,
-} from "./render.js";
+} from "js/render.js";
 
 
 let isSubmitting = false;

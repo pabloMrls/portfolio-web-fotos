@@ -1,9 +1,5 @@
 
 
-import { mostrarUndoToast } from "./ui/toast.js";
-import { renderBreadcrumb } from "./breadcrumb.js";
-
-
 export function renderFotos(onToggle) {
   const app = document.getElementById("app");
   
@@ -27,76 +23,7 @@ export function renderFotos(onToggle) {
   });
 }
 
-// export function renderPanel() {
-//   const carrito = document.getElementById("carrito");
-//   const lista = document.getElementById("lista-seleccionadas");
-//   const contador = document.getElementById("contador");
-//   const tit = document.getElementById("carrito-titulo");
 
-//   tit.textContent = `Fotos seleccionadas (${seleccionadas.length})`;
-//   contador.textContent = seleccionadas.length;
-//   contador.dataset.vacio = seleccionadas.length === 0;
-
-//   lista.innerHTML = "";
-
-//   if (seleccionadas.length === 0) {
-//     // lista.innerHTML = "<p>No hay fotos seleccionadas</p>";
-//     lista.innerHTML = `
-//     <div class="estado-vacio">
-//       <span class="estado-icon"><span class="material-symbols-outlined">image</span></span>
-//       <p>Aún no has seleccionado fotos</p>
-//       <small>Explora los álbumes y elige tus favoritas</small>
-//     </div>
-//   `;
-
-//     //  cerrar carrito automáticamente
-//     carrito.classList.remove("abierto");
-
-//     return;
-//   }
-
-//   seleccionadas.forEach((id) => {
-//     //eso me muestra en consola con una cruz
-//     const foto = foto.find((f) => f.id === id);
-    
-//     const item = document.createElement("div");
-//     // item.className = "item-seleccionada";
-//     item.className = "carrito-item", "item-seleccionada", "entrando";
-
-//     item.innerHTML = `
-//       <img src="${foto.src}" alt="${foto.titulo}">
-//       <div>
-//         <strong>${foto.titulo}</strong>
-//       </div>
-//       <button>Quitar<span class="material-symbols-outlined">delete</span></button>
-//     `;
- 
-//   item.querySelector("button").addEventListener("click", () => {
-//   item.classList.add("saliendo");
-
-//   item.addEventListener("transitionend", () => {
-//     quitarSeleccion(id);
-//     mostrarUndoToast(
-//       () => {
-//         deshacerEliminado();
-       
-//       },
-//       () => {
-//         confirmarEliminado();
-//       }
-//     );
-//   }, { once: true });
-// });
-     
-//     lista.appendChild(item);
-    
-//     requestAnimationFrame(() => {
-//    item.classList.remove("entrando");
-//    });
-
-//   });
-    
-// }
 //Toast
 export function mostrarToast(mensaje) {
   const toast = document.getElementById("toast");
