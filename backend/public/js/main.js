@@ -34,7 +34,7 @@ import {
   renderAlbums,
   renderFotosDeCategoria,
   renderSlider,
-} from "./renderTest.js";
+} from "./render.js";
 
 // import { renderAlbums, renderFotosDeCategoria } from "./render.js";
 // import { renderBreadcrumb } from "./breadcrumb.js";

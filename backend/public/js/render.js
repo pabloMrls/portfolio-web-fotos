@@ -114,8 +114,6 @@ export function renderAlbums(fotosCategorias, onSelectCategoria) {
   const app = document.getElementById("app");
   app.innerHTML = "";
   
-  const titleContainer = document.createElement("section");
-  titleContainer.className = "title-container";
 
   const title = document.createElement("h2");
   title.textContent = "Explora por categoría";
@@ -141,9 +139,7 @@ export function renderAlbums(fotosCategorias, onSelectCategoria) {
     grid.appendChild(card);
 
   });
-  titleContainer.appendChild(title);
-  app.appendChild(titleContainer);
-  titleContainer.appendChild(subtitle)
+  app.appendChild(title)
   app.appendChild(grid);
 }
  function agruparPorCategoria (fotos) {
