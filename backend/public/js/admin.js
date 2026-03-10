@@ -1,4 +1,5 @@
-import { mostrarToast } from "./ui/toast.js";
+import { mostrarToast } from "js/ui/toast.js";
+
 document.addEventListener("DOMContentLoaded", () => {
   console.log("ADMIN JS CARGADO");
   let paginaActual = 1;

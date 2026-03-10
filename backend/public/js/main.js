@@ -28,7 +28,7 @@ import {
 //   renderAlbums,
 //   renderFotosDeCategoria,
 // } from "./render.js";
-import { mostrarUndoToast } from "./ui/toast.js";
+import { mostrarUndoToast } from "js/ui/toast.js";
 
 import {
   renderAlbums,
