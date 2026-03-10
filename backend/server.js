@@ -1,3 +1,5 @@
+console.log("CLOUD:", process.env.CLOUDINARY_CLOUD_NAME);
+console.log("KEY:", process.env.CLOUDINARY_API_KEY);
 import dotenv from "dotenv";
 dotenv.config();
 

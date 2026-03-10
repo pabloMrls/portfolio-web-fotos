@@ -152,7 +152,7 @@ router.post(
 
   await pool.query(
     `
-    INSERT INTO fotos (titulo, categoria, evento_id, src, public_id  precio)
+    INSERT INTO fotos (titulo, categoria, evento_id, src, public_id, precio)
     VALUES ${placeholders.join(",")}
     `,
     values

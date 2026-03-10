@@ -1,4 +1,4 @@
-import { mostrarToast } from "./ui/toast.js";
+import { mostrarToast } from "../ui/toast.js";
 document.addEventListener("DOMContentLoaded", () => {
   console.log("ADMIN JS CARGADO");
   let paginaActual = 1;
@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
   function mostrarToastUndo(mensaje, onUndo) {
-    const toast = document.getElementById("admin-toast");
+    const toast = document.getElementById("toast");
 
     if (!toast) {
       console.error("admin-toast no existe en el DOM");
