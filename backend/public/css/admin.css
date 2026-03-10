@@ -183,7 +183,7 @@ h1 {
 
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: auto;
+  gap: 12px;
 
   margin-bottom: 32px;
 }
@@ -602,4 +602,133 @@ Formulario para subir fotos
   padding: 8px 12px;
   border-radius: 12px;
   color: #fdfdfd;
+}
+
+.admin-evento {
+  display: grid;
+  grid-template-columns: 120px 1fr auto;
+  align-items: center;
+  gap: 16px;
+}
+
+.evento-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+
+/*====================
+ medias queries
+======================*/
+
+@media (max-width: 900px) {
+
+  body {
+    padding: 16px;
+  }
+
+  .admin {
+    margin: 20px auto;
+  }
+
+  .admin-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+
+}
+@media (max-width: 600px) {
+
+  .admin-evento {
+    grid-template-columns: 1fr;
+   
+  }
+
+  .admin-evento img {
+    width:100%;
+    height:auto;
+  }
+
+  .evento-acciones {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+}
+@media (max-width: 700px) {
+
+  h1 {
+    font-size: 1.2rem;
+  }
+
+  .admin-tabs {
+    flex-wrap: wrap;
+  }
+
+  .admin-form {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-evento {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .admin-evento img {
+    width: 100%;
+    height: auto;
+  }
+
+  #form-evento {
+    padding: 16px;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .admin-evento {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-evento img {
+    width: 100%;
+    height: auto;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  body {
+    padding: 12px;
+  }
+
+  .admin-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-actions {
+    flex-direction: column;
+  }
+
+  .admin-foto img {
+    height: 200px;
+  }
+
+  .admin-tabs {
+    gap: 6px;
+  }
+
+  .tab {
+    flex: 1;
+    text-align: center;
+  }
+
+}
+
+img {
+  max-width: 100%;
+  height: auto;
 }

@@ -14,6 +14,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const selectEvento = document.querySelector('select[name="evento_id"]');
 
+  function thumbnail(src, size = 300) {
+    if (!src.includes("cloudinary")) return src;
+
+    return src.replace(
+      "/upload/",
+      `/upload/w_${size},h_${size},c_fill,q_auto,f_auto/`,
+    );
+  }
   //Paginación de fotos
   async function cargarFotosPaginadas(reset = false) {
     if (cargando) return;
@@ -52,23 +60,22 @@ document.addEventListener("DOMContentLoaded", () => {
       article.className = "admin-foto";
 
       article.innerHTML = `
-  <img src="${foto.src}" class="miniaturas">
+  <img src="${thumbnail(foto.src)}" class="miniaturas">
   <div class="admin-info">
     <strong class="foto-titulo">${foto.titulo}</strong>
     <small class="foto-categoria">${foto.categoria || ""}</small>
   </div>
   <div class="admin-actions">
-     ${
-       vistaActual === "activas"
-         ? `
+     ${vistaActual === "activas"
+          ? `
         <button class="btn-editar-foto">Editar</button>
         <button class="btn-eliminar">Mover a papelera</button>
       `
-         : `
+          : `
         <button class="btn-restaurar">Restaurar</button>
         <button class="btn-eliminar-def">Eliminar definitivo</button>
       `
-     }
+        }
   </div>
 `;
       if (vistaActual === "activas") {
@@ -423,25 +430,32 @@ document.addEventListener("DOMContentLoaded", () => {
       div.className = "admin-evento";
 
       div.innerHTML = `
-      <img src="${evento.portada}" width="120">
-      <strong class="evento-nombre">${evento.nombre}</strong>
-      <p>${new Date(evento.fecha).toLocaleDateString("es-ES")}</p>
+ 
 
-      ${
-        vistaEventos === "activos"
-          ? `
-            <button class="btn-editar">Editar</button>
-            <button class="btn-gestionar">Gestionar fotos</button>
-            <button class="btn-eliminar">Mover a papelera</button>
-          `
-          : `
-            <button class="btn-ver-fotos">Ver fotos</button>
-            <button class="btn-restaurar">Restaurar</button>
-            <button class="btn-eliminar-def">Eliminar definitivo</button>
-          `
-      }
-    `;
+  <div class="evento-info">
+   <img src="${thumbnail(evento.portada, 200)}" width="120">
+    <strong class="evento-nombre">${evento.nombre}</strong>
+    <p>${new Date(evento.fecha).toLocaleDateString("es-ES")}</p>
+  </div>
 
+  ${
+    vistaEventos === "activos"
+      ? `
+        <div class="evento-acciones">
+          <button class="btn-editar">Editar</button>
+          <button class="btn-gestionar">Gestionar fotos</button>
+          <button class="btn-eliminar">Mover a papelera</button>
+        </div>
+      `
+      : `
+        <div class="evento-acciones">
+          <button class="btn-ver-fotos">Ver fotos</button>
+          <button class="btn-restaurar">Restaurar</button>
+          <button class="btn-eliminar-def">Eliminar definitivo</button>
+        </div>
+      `
+  }
+`;
       // ===============================
       // 🔹 VISTA ACTIVOS
       // ===============================
@@ -452,13 +466,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         // Gestionar fotos
-        div
-  .querySelector(".btn-gestionar")
-  ?.addEventListener("click", () => {
-
-    window.location.href = `/admin-evento.html?id=${evento.id}`;
-
-  });
+        div.querySelector(".btn-gestionar")?.addEventListener("click", () => {
+          window.location.href = `/admin-evento.html?id=${evento.id}`;
+        });
         // div
         //   .querySelector(".btn-gestionar")
         //   ?.addEventListener("click", async () => {
@@ -544,7 +554,7 @@ document.addEventListener("DOMContentLoaded", () => {
               .map(
                 (f) =>
                   `
-            <img src="${f.src}"
+            <img src="${thumbnail(f.src, 200)}"
                  style="width:80px;height:80px;object-fit:cover;margin:4px;">
             `,
               )
