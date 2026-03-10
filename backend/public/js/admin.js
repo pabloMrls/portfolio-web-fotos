@@ -239,7 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
   function mostrarToastUndo(mensaje, onUndo) {
-    const toast = document.getElementById("toast");
+    const toast = document.getElementById("admin-toast");
 
     if (!toast) {
       console.error("admin-toast no existe en el DOM");

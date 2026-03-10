@@ -28,7 +28,7 @@ import {
 //   renderAlbums,
 //   renderFotosDeCategoria,
 // } from "./render.js";
-import { mostrarUndoToast } from "js/ui/toast.js";
+import { mostrarUndoToast, mostrarConfirmacion } from "js/ui/toast.js";
 
 import {
   renderAlbums,
@@ -36,13 +36,6 @@ import {
   renderSlider,
 } from "./render.js";
 
-// import { renderAlbums, renderFotosDeCategoria } from "./render.js";
-// import { renderBreadcrumb } from "./breadcrumb.js";
-// import { renderSlider } from "./render.js";
-import { mostrarConfirmacion } from "./ui/toast.js";
-// import { enviarReserva } from "./api.js";
-// import { fotos } from "./data.js";
-// import { cargarFotos } from "./api.js";
 
 let isSubmitting = false;
 
