@@ -154,9 +154,11 @@ document.addEventListener("DOMContentLoaded", () => {
   //Botón de ver más
   const btnCargarMas = document.getElementById("btn-cargar-mas");
 
+ if (btnCargarMas) {
   btnCargarMas.addEventListener("click", () => {
     cargarFotosPaginadas();
   });
+}
 
   function actualizarBotonCargarMas(dataLength) {
     if (dataLength === 0 && paginaActual === 1) {
@@ -180,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const btnFotosActivas = document.getElementById("btn-fotos-activas");
   const btnFotosPapelera = document.getElementById("btn-fotos-papelera");
-
+  if(btnFotosActivas) {
   btnFotosActivas.addEventListener("click", () => {
     vistaActual = "activas";
     paginaActual = 1;
@@ -191,7 +193,8 @@ document.addEventListener("DOMContentLoaded", () => {
     actualizarVistaFotos();
     cargarFotosPaginadas(true);
   });
-
+  }
+  if(btnFotosPapelera) {
   btnFotosPapelera.addEventListener("click", () => {
     vistaActual = "papelera";
     paginaActual = 1;
@@ -201,7 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
     actualizarVistaFotos();
     cargarFotosPaginadas(true);
   });
-
+  }
   document.querySelectorAll("[data-vista-eventos]").forEach((btn) => {
     btn.addEventListener("click", async () => {
       vistaEventos = btn.dataset.vistaEventos;
@@ -386,6 +389,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //Cargar eventos en select
   async function cargarEventosEnSelect() {
+    if (!selectEvento) return;
     const eventos = await cargarEventosAdmin();
 
     selectEvento.innerHTML = `
@@ -421,7 +425,7 @@ document.addEventListener("DOMContentLoaded", () => {
       await cargarFotosPaginadas(true);
     });
   }
-
+  if(form){
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -454,7 +458,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error(err);
       alert("No se pudo agregar la foto");
     }
-  });
+  });}
   // Cargar eventos en el admin
   async function cargarEventosAdmin() {
     const res = await fetch(`/api/eventos?estado=${vistaEventos}`);
@@ -693,7 +697,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const eventos = await cargarEventosAdmin();
     renderEventosAdmin(eventos);
   }
-
+  if(formEvento){
   formEvento.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -709,7 +713,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const eventos = await cargarEventosAdmin();
     renderEventosAdmin(eventos);
   });
-
+  }
   async function initEventosAdmin() {
     const eventos = await cargarEventosAdmin();
     renderEventosAdmin(eventos);
