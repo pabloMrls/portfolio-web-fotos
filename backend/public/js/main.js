@@ -157,10 +157,6 @@ function closePreview() {
 
   document.body.classList.remove("no-scroll");
 }
-// function updatePreview() {
-//   console.log("FOTO ACTUAL:", fotosActuales[currentIndex]);
-//   previewImg.src = fotosActuales[currentIndex].src;
-// }
 
 function updatePreview() {
   console.log("ARRAY:", fotosActuales);

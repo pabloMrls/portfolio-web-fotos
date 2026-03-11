@@ -26,35 +26,74 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   //Paginación de fotos
   async function cargarFotosPaginadas(reset = false) {
-    if (cargando) return;
-    cargando = true;
+  if (cargando) return;
+  cargando = true;
 
+  try {
     if (reset) {
       paginaActual = 1;
       contenedor.innerHTML = "";
     }
 
-    const res = await fetch(
-      `/api/fotos?page=${paginaActual}&estado=${vistaActual}`,
-    );
+    const res = await fetch(`/api/fotos?page=${paginaActual}&estado=${vistaActual}`);
+
+    if (!res.ok) {
+      throw new Error("Error cargando fotos");
+    }
+
     const data = await res.json();
+    const fotos = data.data || [];
 
-    totalPaginas = data.totalPages || 1;
+    totalPaginas = data.totalPages ?? 1;
 
-    // 🔒 SOLO mostrar vacío si es primera carga
-    if (reset && data.data.length === 0) {
+    if (reset && fotos.length === 0) {
       mostrarEstadoVacio();
-      btnCargarMas.style.display = "none";
-      cargando = false;
+      if (btnCargarMas) btnCargarMas.style.display = "none";
       return;
     }
-    renderFotosIncremental(data.data);
+
+    renderFotosIncremental(fotos);
 
     paginaActual++;
-    cargando = false;
 
-    actualizarBotonCargarMas(data.data.length);
+    actualizarBotonCargarMas(fotos.length);
+
+  } catch (err) {
+    console.error("Error cargando fotos:", err);
+  } finally {
+    cargando = false;
   }
+}
+  // async function cargarFotosPaginadas(reset = false) {
+  //   if (cargando) return;
+  //   cargando = true;
+
+  //   if (reset) {
+  //     paginaActual = 1;
+  //     contenedor.innerHTML = "";
+  //   }
+
+  //   const res = await fetch(
+  //     `/api/fotos?page=${paginaActual}&estado=${vistaActual}`,
+  //   );
+  //   const data = await res.json();
+
+  //   totalPaginas = data.totalPages || 1;
+
+  //   // 🔒 SOLO mostrar vacío si es primera carga
+  //   if (reset && data.data.length === 0) {
+  //     mostrarEstadoVacio();
+  //     btnCargarMas.style.display = "none";
+  //     cargando = false;
+  //     return;
+  //   }
+  //   renderFotosIncremental(data.data);
+
+  //   paginaActual++;
+  //   cargando = false;
+
+  //   actualizarBotonCargarMas(data.data.length);
+  // }
   // Render incremental
   function renderFotosIncremental(fotos) {
     fotos.forEach((foto) => {
