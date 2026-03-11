@@ -1,4 +1,4 @@
-import { mostrarToast, mostrarToastUndo } from "../ui/toast.js";
+// import { mostrarToast, mostrarToastUndo } from "../ui/toast.js";
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -16,14 +16,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const selectEvento = document.querySelector('select[name="evento_id"]');
 
-  function thumbnail(src, size = 300) {
-    if (!src.includes("cloudinary")) return src;
+ function thumbnail(src, size = 300) {
+  if (!src) return "";
+  if (!src.includes("cloudinary")) return src;
 
-    return src.replace(
-      "/upload/",
-      `/upload/w_${size},h_${size},c_fill,q_auto,f_auto/`,
-    );
-  }
+  return src.replace(
+    "/upload/",
+    `/upload/w_${size},h_${size},c_fill,q_auto,f_auto/`
+  );
+}
   //Paginación de fotos
   async function cargarFotosPaginadas(reset = false) {
   if (cargando) return;
@@ -363,7 +364,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const nuevaCategoria = article.querySelector(".edit-categoria").value;
 
     if (!nuevoTitulo) {
-      mostrarToast("El título no puede estar vacío", "error");
+      // mostrarToast("El título no puede estar vacío", "error");
       return;
     }
 
@@ -377,11 +378,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     if (!res.ok) {
-      mostrarToast("Error actualizando foto", "error");
+      // mostrarToast("Error actualizando foto", "error");
       return;
     }
 
-    mostrarToast("Foto actualizada correctamente", "success");
+    // mostrarToast("Foto actualizada correctamente", "success");
 
     await cargarFotosPaginadas(true);
   }
@@ -411,19 +412,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     if (!res.ok) {
-      mostrarToast("Error moviendo a papelera", "error");
+      // mostrarToast("Error moviendo a papelera", "error");
       return;
     }
 
     await cargarFotosPaginadas(true);
 
-    mostrarToastUndo("Foto movida a papelera", async () => {
-      await fetch(`/api/fotos/${id}/restore`, {
-        method: "PUT",
-      });
+    // mostrarToastUndo("Foto movida a papelera", async () => {
+    //   await fetch(`/api/fotos/${id}/restore`, {
+    //     method: "PUT",
+    //   });
 
-      await cargarFotosPaginadas(true);
-    });
+    //   await cargarFotosPaginadas(true);
+    // });
   }
   if(form){
   form.addEventListener("submit", async (e) => {
