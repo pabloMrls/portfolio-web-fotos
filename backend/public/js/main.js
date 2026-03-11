@@ -28,7 +28,7 @@ import {
 //   renderAlbums,
 //   renderFotosDeCategoria,
 // } from "./render.js";
-import { mostrarUndoToast} from "./ui/toast.js";
+import { mostrarToastUndo} from "./ui/toast.js";
 
 import {
   renderAlbums,
@@ -590,7 +590,7 @@ function renderItemsCarrito(lista) {
     item.querySelector("button").addEventListener("click", () => {
       dispatch(() => quitarSeleccion(id));
 
-      mostrarUndoToast(
+      mostrarToastUndo(
         () => dispatch(() => deshacerEliminado()),
         () => dispatch(() => confirmarEliminado()),
       );
