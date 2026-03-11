@@ -23,11 +23,11 @@ import {
   restaurarEstado
 } from "./state.js";
 
-// import {
-//   mostrarToast,
-//   renderAlbums,
-//   renderFotosDeCategoria,
-// } from "./render.js";
+import {
+  mostrarToast,
+  renderAlbums,
+  renderFotosDeCategoria,
+} from "./render.js";
 import { mostrarToastUndo} from "./ui/toast.js";
 
 import {
