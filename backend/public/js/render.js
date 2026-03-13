@@ -281,7 +281,7 @@ export function renderSlider(fotos) {
 
 
   frame.innerHTML = `
-    <img src="${fotoActual.src}" alt="${fotoActual.titulo}">
+    <img src="${fotoActual.thumb}" alt="${fotoActual.titulo}">
     
     <div class="slider-overlay">
       <h3>${fotoActual.titulo}</h3>

@@ -60,7 +60,7 @@ router.get("/", asyncHandler(async (req, res) => {
   );
   const fotos = rows.map(f=> ({
     ...f,
-    ...buildImageUrls(f.src)
+    ...buildImageUrls(f.public_id)
   }))
   res.json({ data: fotos });
 }));

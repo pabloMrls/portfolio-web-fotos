@@ -741,7 +741,7 @@ async function renderEventoView() {
           (foto) => `
             <div class="evento-item ${seleccionadas.includes(foto.id) ? "selected" : ""}" data-id="${foto.id}">
 
-              <img src="${foto.src}" alt="${foto.titulo || ""}">
+              <img src="${foto.thumb}" alt="${foto.titulo || ""}">
                
                <span class="tilde ${seleccionadas.includes(foto.id) ? "visible" : ""}">
                   <span class="material-symbols-outlined">done</span>

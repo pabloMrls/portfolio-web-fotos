@@ -1,20 +1,28 @@
 import cloudinary from "./cloudinary.js";
 
-export function buildImageUrls (src) {
-    const publicId = src.split("/upload/")[1].split(".")[0];
+export function buildImageUrls(publicId) {
 
-    return {
-        original: cloudinary.url(publicId),
-        preview: cloudinary.url(publicId, {
-            transformation: [
-                { quality : "40"},
-                { overlay: "watermark", opacity: 50, gravity:"south_east"}
-            ]
-        }),
-        thumb: cloudinary.url(publicId, {
-            transformation: [
-                {width: 400, crop: "fill"}
-            ]
-        })
-    }
+  return {
+
+    original: cloudinary.url(publicId, {
+      secure: true
+    }),
+
+    preview: cloudinary.url(publicId, {
+      secure: true,
+      transformation: [
+        { quality: "40" },
+        { overlay: "watermark", opacity: 60, gravity: "center" }
+      ]
+    }),
+
+    thumb: cloudinary.url(publicId, {
+      secure: true,
+      transformation: [
+        { width: 400, crop: "fill", quality: "auto", fetch_format: "auto" }
+      ]
+    })
+
+  };
+
 }
