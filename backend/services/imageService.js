@@ -1,4 +1,4 @@
-import cloudinary from "./cloudinary";
+import cloudinary from "./cloudinary.js";
 
 export function buildImageUrls (src) {
     const publicId = src.split("/upload/")[1].split(".")[0];
