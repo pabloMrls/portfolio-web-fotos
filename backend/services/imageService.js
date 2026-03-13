@@ -13,7 +13,7 @@ export function buildImageUrls(publicId) {
       secure: true,
       transformation: [
         { quality: "40" },
-        { overlay: "logos:watermark_egtid7" },
+        { overlay: "logos:l_watermark_egtid7" },
         { gravity: "center" },
         { opacity: 70 }
       ]
