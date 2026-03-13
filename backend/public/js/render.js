@@ -89,7 +89,7 @@ export function renderAlbums(fotosCategorias, onSelectCategoria) {
 
   const previews = fotosCategoria
     .slice(0, 3)
-    .map(f => `<img src="${f.src}" alt="">`)
+    .map(f => `<img src="${f.thumb}" alt="">`)
     .join("");
 
   article.innerHTML = `
@@ -211,7 +211,7 @@ btnSeleccionar.addEventListener("click", () => {
 
 card.innerHTML = `
   <div class="foto-img-wrapper">
-    <img src="${foto.src}" alt="${foto.titulo}">
+    <img src="${foto.thumb}" alt="${foto.titulo}">
 
     <span class="preview-icon"><span class="material-symbols-outlined">search</span></span>
 

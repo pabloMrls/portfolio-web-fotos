@@ -1,6 +1,7 @@
 import express from "express";
 import multer from "multer";
 import storage from "../services/cloudinaryStorage.js";
+import { buildImageUrls } from "../services/imageService.js";
 import path from "path";
 // import { fileURLToPath } from "url";
 import { pool } from "../db/postgres.js";
@@ -57,8 +58,11 @@ router.get("/", asyncHandler(async (req, res) => {
     `,
     [limit, offset]
   );
-
-  res.json({ data: rows });
+  const fotos = rows.map(f=> ({
+    ...f,
+    ...buildImageUrls(f.src)
+  }))
+  res.json({ data: fotos });
 }));
 
 // POST foto
@@ -126,6 +130,7 @@ router.post(
     for (const file of req.files) {
 
       const src = file.path;
+      
       const public_id = file.filename;
       const titulo = path.parse(file.originalname).name;
 

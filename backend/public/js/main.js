@@ -163,7 +163,7 @@ function updatePreview() {
   console.log("INDEX:", currentIndex);
   console.log("OBJ:", fotosActuales[currentIndex]);
 
-  previewImg.src = fotosActuales[currentIndex]?.src;
+  previewImg.src = fotosActuales[currentIndex].preview;
 }
 
 previewClose.addEventListener("click", closePreview);
