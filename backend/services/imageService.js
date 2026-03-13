@@ -1,5 +1,7 @@
 import cloudinary from "./cloudinary.js";
 
+import cloudinary from "./cloudinary.js";
+
 export function buildImageUrls(publicId) {
 
   return {
@@ -13,9 +15,9 @@ export function buildImageUrls(publicId) {
       transformation: [
         { quality: "40" },
         {
-          overlay: "logos/watermark_egtid7",
-          opacity: 70,
-          gravity: "center"
+          overlay: "logos:watermark_egtid7",
+          gravity: "center",
+          opacity: 70
         }
       ]
     }),
