@@ -1,4 +1,3 @@
-import cloudinary from "./cloudinary.js";
 
 import cloudinary from "./cloudinary.js";
 
