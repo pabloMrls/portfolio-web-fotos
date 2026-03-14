@@ -12,10 +12,7 @@ export function buildImageUrls(publicId) {
     preview: cloudinary.url(publicId, {
       secure: true,
       transformation: [
-        { quality: "40" },
-        { overlay: "logos:watermark" },
-        { gravity: "center" },
-        { opacity: 70 }
+        { transformation:"preview_watermark" }
       ]
     }),
 
